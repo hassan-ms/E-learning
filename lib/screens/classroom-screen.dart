@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../category.dart';
 import '../constants.dart';
-import '../providers/classroom-manager.dart';
 class ClassRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final client=ModalRoute.of(context).settings.arguments;
-    final classroom =Provider.of<ClassroomManager>(context);
     return Scaffold(
       
       body: Padding(
