@@ -1,34 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:googleapis/classroom/v1.dart';
-
 import "package:googleapis_auth/auth_io.dart";
 import 'package:url_launcher/url_launcher.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
+GoogleSignIn _googleSignIn = GoogleSignIn.standard(
   scopes: <String>[
     'email',
     ClassroomApi.ClassroomCoursesScope,
     'https://www.googleapis.com/auth/classroom.profile.emails',
     'https://www.googleapis.com/auth/classroom.rosters',
     'https://www.googleapis.com/auth/classroom.coursework.students',
-    'https://www.googleapis.com/auth/classroom.announcements'
+    'https://www.googleapis.com/auth/classroom.announcements',
+    'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
+    'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
+    'https://www.googleapis.com/auth/classroom.coursework.me'
   ],
 );
 
 class AuthManager with ChangeNotifier{
+
+
   static var _authClient;
-   Future<GoogleSignInAccount> signIn() async {
-    try {
-      final account = await _googleSignIn.signIn();
-      print('account: ${account?.toString()}');
-      return account;
-    } catch (error) {
-      print(error);
-      return error;
+  Future signIn() async {
+  try {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    return await _googleSignIn.authenticatedClient();
+    //print('account: ${account?.toString()}');
+  } catch (error) {
+    print(error);
+    return error;
     }
   }
-     get client{
+    get client{
     return _authClient;
   }
   static Future<GoogleSignInAccount> signInSilently() async {

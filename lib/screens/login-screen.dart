@@ -1,24 +1,24 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-
 import '../constants.dart';
 import '../providers/classroom-manager.dart';
 import 'package:provider/provider.dart';
-import '../providers/google-http-client.dart';
+import '../providers/google-http-client.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../providers/auth-manager.dart';
 
 class LoginScreen extends StatelessWidget {
+
   Future _handleSignIn(BuildContext ctx) async {
-    await Provider.of<AuthManager>(ctx).loginByBrowser();
+   // await Provider.of<AuthManager>(ctx).loginByBrowser();
     //var client=GoogleHttpClient(await account.authHeaders);
-    var client = Provider.of<AuthManager>(ctx).client;
+    var client = Provider.of<AuthManager>(ctx).signIn();
     if (client != null) {
       await Provider.of<ClassroomManager>(ctx).setClient(client);
       Navigator.of(ctx).pushReplacementNamed('course-screen');
     }
     return null;
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +81,11 @@ class LoginScreen extends StatelessWidget {
                 ),
                 elevation: 8,
               )),
-          // FlatButton(
-          //     onPressed: () => AuthManager.signOut(), child: Text('logout')),
+           FlatButton(
+               onPressed: () => AuthManager.signOut(), child: Text('logout')),
         ],
       ),
     ]));
+      }
   }
-}
+

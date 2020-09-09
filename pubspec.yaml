@@ -24,6 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   google_sign_in: ^4.5.3
+  extension_google_sign_in_as_googleapis_auth: ^1.0.0
   googleapis: ^0.55.0
   http: ^0.12.2
   provider: ^3.0.0
