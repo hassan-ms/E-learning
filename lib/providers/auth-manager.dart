@@ -5,10 +5,12 @@ import 'package:googleapis/classroom/v1.dart';
 import "package:googleapis_auth/auth_io.dart";
 import 'package:url_launcher/url_launcher.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn.standard(
-  scopes: <String>[
+final GoogleSignIn _googleSignIn = GoogleSignIn.standard();
+List<String> scopes = [
     'email',
     ClassroomApi.ClassroomCoursesScope,
+    ClassroomApi.ClassroomTopicsScope,
+    ClassroomApi.ClassroomRostersScope,
     'https://www.googleapis.com/auth/classroom.profile.emails',
     'https://www.googleapis.com/auth/classroom.rosters',
     'https://www.googleapis.com/auth/classroom.coursework.students',
@@ -16,8 +18,7 @@ GoogleSignIn _googleSignIn = GoogleSignIn.standard(
     'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
     'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
     'https://www.googleapis.com/auth/classroom.coursework.me'
-  ],
-);
+  ];
 
 class AuthManager with ChangeNotifier{
 
@@ -26,7 +27,8 @@ class AuthManager with ChangeNotifier{
   Future signIn() async {
   try {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    _googleSignIn.requestScopes(scopes);
+    //final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     return await _googleSignIn.authenticatedClient();
     //print('account: ${account?.toString()}');
   } catch (error) {
@@ -37,6 +39,8 @@ class AuthManager with ChangeNotifier{
     get client{
     return _authClient;
   }
+
+  // TODO: Silent sign in
   static Future<GoogleSignInAccount> signInSilently() async {
     var account = await _googleSignIn.signInSilently();
     print('account: $account');
@@ -46,13 +50,14 @@ class AuthManager with ChangeNotifier{
   static Future<void> signOut() async {
     try {
       _googleSignIn.disconnect();
+      print("DISCONNECTED");
     } catch (error) {
       print(error);
     }
   }
-   Future<AutoRefreshingAuthClient> loginByBrowser()async{
-    var id = new ClientId("19932950879-18t9khm302m9n9t7m439t95kcpsdr24q.apps.googleusercontent.com", "");
-    //var client = new http.Client();
+//    Future<AutoRefreshingAuthClient> loginByBrowser()async{
+//     var id = new ClientId("19932950879-18t9khm302m9n9t7m439t95kcpsdr24q.apps.googleusercontent.com", "");
+//     var client = new http.Client();
 // obtainAccessCredentialsViaUserConsent(id, [
 //     'email',
 //     ClassroomApi.ClassroomCoursesScope,
@@ -67,20 +72,20 @@ class AuthManager with ChangeNotifier{
 
 //   client.close();
 // });
-  var client = await clientViaUserConsent(id, [
-    'email',
-    ClassroomApi.ClassroomCoursesScope,
-    'https://www.googleapis.com/auth/classroom.profile.emails',
-    'https://www.googleapis.com/auth/classroom.rosters',
-    'https://www.googleapis.com/auth/classroom.coursework.students',
-    'https://www.googleapis.com/auth/classroom.announcements',
-    'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
-    'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
-    'https://www.googleapis.com/auth/classroom.coursework.me'
-  ], (url){
-    launch(url);
-  });
-     _authClient=client;
-     return client;
-  }
+//   var client = await clientViaUserConsent(id, [
+//     'email',
+//     ClassroomApi.ClassroomCoursesScope,
+//     'https://www.googleapis.com/auth/classroom.profile.emails',
+//     'https://www.googleapis.com/auth/classroom.rosters',
+//     'https://www.googleapis.com/auth/classroom.coursework.students',
+//     'https://www.googleapis.com/auth/classroom.announcements',
+//     'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
+//     'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
+//     'https://www.googleapis.com/auth/classroom.coursework.me'
+//   ], (url){
+//     launch(url);
+//   });
+//      _authClient=client;
+//      return client;
+//   }
 }
