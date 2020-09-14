@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-
 import '../constants.dart';
 import '../providers/classroom-manager.dart';
 import 'package:provider/provider.dart';
