@@ -5,7 +5,6 @@ class ClassRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Padding(
         padding: EdgeInsets.only(left: 20, top: 50, right: 20),
         child: Column(

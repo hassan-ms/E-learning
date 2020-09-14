@@ -69,6 +69,22 @@ class ClassroomManager with ChangeNotifier{
     }
   }
 
+  Future <void> addAnnouncement(gc.Announcement announce,courseId)async{
+    try{
+     final announcement= await classroom.courses.announcements.create(gc.Announcement.fromJson({
+       'text':announce.text,
+       'materials':announce.materials,
+       'state':'published',
+       'materials':announce.materials,
+
+     }), courseId);
+     _announcements.add(announcement);
+    }
+    catch(e){
+      print(e);
+    }
+    notifyListeners();
+  }
   //assignments
   Future<void> fetchAssignments(courseId)async{
     //final assignments=await classroom.courses.courseWork.list(courseId);
@@ -82,5 +98,6 @@ class ClassroomManager with ChangeNotifier{
     }
     
   }
+  
   
 }

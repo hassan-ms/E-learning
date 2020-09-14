@@ -1,5 +1,6 @@
 import 'package:elearning4/providers/auth-manager.dart';
 import 'package:elearning4/providers/classroom-manager.dart';
+import 'package:elearning4/screens/add-materials-screen.dart';
 import 'package:elearning4/screens/classroom-screen.dart';
 import 'package:elearning4/screens/course-screen.dart';
 import 'package:elearning4/screens/login-screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         'classroom-screen':(ctx)=>ClassRoomScreen(),
         'course-screen':(ctx)=>CourseScreen(),
         'material-screen':(ctx)=>MaterialsScreen(),
+        'add-materials':(ctx)=>AddMaterials(),
       },
     
     )

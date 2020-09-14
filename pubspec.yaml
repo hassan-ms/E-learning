@@ -32,6 +32,7 @@ dependencies:
   flutter_svg: ^0.17.3+1
   intl: ^0.16.1
   animated_text_kit: ^2.2.0
+  file_picker: ^2.0.0
   
 dev_dependencies:
   flutter_test:

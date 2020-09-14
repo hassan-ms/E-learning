@@ -4,10 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class TheAppBar extends StatelessWidget {
   const TheAppBar({
     Key key,
-    @required this.size,
+     size,
   }) : super(key: key);
 
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +15,9 @@ class TheAppBar extends StatelessWidget {
         //color: Colors.white,
         border: Border(bottom: BorderSide(width: 0.15)),
       ),
-      margin: EdgeInsets.only(bottom: size.height * 0.02,),
-      padding: EdgeInsets.only(right: 10),
-      height: size.height * 0.1,
+      margin: EdgeInsets.only(bottom: 20,),
+      padding: EdgeInsets.only(right: 10,bottom: 10,top: 10),
+     // height: 70,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
