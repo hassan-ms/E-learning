@@ -52,12 +52,14 @@ class _MaterialsScreenState extends State<MaterialsScreen> {
     return SafeArea(
       child: Scaffold(
           body: Column(
+          
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TheAppBar(
             size: size,
           ),
           Container(
+            
               padding: EdgeInsets.only(top: 5, bottom: 12, left: 10),
               child: Text("Course Materials",
                   style: kSubheadingextStyle.copyWith(
