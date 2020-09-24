@@ -45,7 +45,7 @@ class CourseScreen extends StatelessWidget {
                       ),
                       onTap: () {
                         Navigator.of(context).pushNamed('material-screen',
-                            arguments: '24269433570');
+                            arguments: '148352686559');
                       },
                     ),
                     InkWell(

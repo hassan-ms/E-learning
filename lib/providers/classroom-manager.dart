@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:googleapis/classroom/v1.dart' as gc;
+import 'package:googleapis/drive/v3.dart' as ga;
 
 class ClassroomManager with ChangeNotifier{
    
    gc.ClassroomApi classroom;
+   ga.DriveApi drive;
   // ClassroomManager(this.client){
   //    classroom=gc.ClassroomApi(client);
   // }
@@ -21,6 +24,7 @@ class ClassroomManager with ChangeNotifier{
   Future<void> setClient(authClient)async{
      var client = await authClient;
     classroom = gc.ClassroomApi(client);
+    drive = ga.DriveApi(client);
   }
   
    Future<String> createCoure()async{
@@ -69,15 +73,19 @@ class ClassroomManager with ChangeNotifier{
     }
   }
 
-  Future <void> addAnnouncement(gc.Announcement announce,courseId)async{
+  Future <void> addAnnouncement({@required courseId,@required announce})async{
+    
     try{
-     final announcement= await classroom.courses.announcements.create(gc.Announcement.fromJson({
-       'text':announce.text,
-       'materials':announce.materials,
-       'state':'published',
-       'materials':announce.materials,
-
-     }), courseId);
+    
+    //  final announcement= await classroom.courses.announcements.create(gc.Announcement.fromJson(
+    //    {
+    //      'text':'hello second',
+    //      'materials':[
+    //        materials
+    //        ]
+    //    }
+    //  ), courseId);
+    final announcement =await classroom.courses.announcements.create(announce, courseId);
      _announcements.add(announcement);
     }
     catch(e){
@@ -98,6 +106,51 @@ class ClassroomManager with ChangeNotifier{
     }
     
   }
-  
-  
+  Future<List<ga.File>>uploadFiles(List<dynamic> files)async{
+    //final course=await classroom.courses.get('148352686559');
+   
+    List<ga.File>gfiles=[];
+    for(var element in files){
+       final file=File(element.path);
+       ga.File fileToUpload=ga.File();
+       fileToUpload.parents=[
+     '0BzfsOody00jffkVZY2ZaU0FMMnZLRWs1bmhlY2djcTZqc1V5X1J0eEpxbE1aUm9UTmJnLTg'
+     ];
+     fileToUpload.name=element.name;
+      var f=await drive.files.create(fileToUpload,uploadMedia: ga.Media(file.openRead(),file.lengthSync()),ignoreDefaultVisibility: true );
+     gfiles.add(f);
+    }
+    //   files.forEach((element)async {
+    //    final file=File(element.path);
+    //    ga.File fileToUpload=ga.File();
+    //    fileToUpload.parents=[
+    //  '0BzfsOody00jffkVZY2ZaU0FMMnZLRWs1bmhlY2djcTZqc1V5X1J0eEpxbE1aUm9UTmJnLTg'
+    //  ];
+    //  fileToUpload.name=element.name;
+    //   var f=await drive.files.create(fileToUpload,uploadMedia: ga.Media(file.openRead(),file.lengthSync()) );
+    //  gfiles.add(f);
+
+    
+    // });
+    
+   return gfiles;
+  }
+  Future addann(courseId,id)async{
+     final announcement= await classroom.courses.announcements.create(gc.Announcement.fromJson(
+       {
+         'text':'hello second',
+         'materials':[{
+           'driveFile':{
+             'driveFile':{
+               'id':id,
+             },
+           },
+           'shareMode':'VIEW'
+         }
+           
+           ]
+       }
+     ), courseId);
+     print(announcement.alternateLink);
+  }
 }
