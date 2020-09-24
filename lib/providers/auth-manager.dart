@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
 import 'package:googleapis/classroom/v1.dart';
-import "package:googleapis_auth/auth_io.dart";
-import 'package:url_launcher/url_launcher.dart';
+//import "package:googleapis_auth/auth_io.dart";
+//import 'package:url_launcher/url_launcher.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn.standard();
 List<String> scopes = [
@@ -26,14 +26,16 @@ class AuthManager with ChangeNotifier{
   static var _authClient;
   Future signIn() async {
   try {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    _googleSignIn.requestScopes(scopes);
+    await _googleSignIn.signInSilently();
+    await _googleSignIn.requestScopes(scopes);
     //final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     return await _googleSignIn.authenticatedClient();
     //print('account: ${account?.toString()}');
   } catch (error) {
     print(error);
-    return error;
+    await _googleSignIn.signIn();
+    await _googleSignIn.requestScopes(scopes);
+    return await _googleSignIn.authenticatedClient();
     }
   }
     get client{
@@ -41,15 +43,15 @@ class AuthManager with ChangeNotifier{
   }
 
   // TODO: Silent sign in
-  static Future<GoogleSignInAccount> signInSilently() async {
-    var account = await _googleSignIn.signInSilently();
+   static Future<GoogleSignInAccount> signInSilently() async {
+    var account = _googleSignIn.signInSilently();
     print('account: $account');
     return account;
-  }
+   }
 
   static Future<void> signOut() async {
     try {
-      _googleSignIn.disconnect();
+      _googleSignIn.signOut();
       print("DISCONNECTED");
     } catch (error) {
       print(error);

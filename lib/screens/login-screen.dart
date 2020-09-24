@@ -2,9 +2,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import '../constants.dart';
 import '../providers/classroom-manager.dart';
 import 'package:provider/provider.dart';
-import '../providers/google-http-client.dart' as http;
+//import '../providers/google-http-client.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import '../providers/auth-manager.dart';
 
 class LoginScreen extends StatelessWidget {

@@ -6,7 +6,7 @@ import '../providers/classroom-manager.dart';
 import 'package:provider/provider.dart';
 import 'package:googleapis/classroom/v1.dart' as gc;
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 
 class MaterialsScreen extends StatefulWidget {
   @override
