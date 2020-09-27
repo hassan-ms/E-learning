@@ -29,13 +29,15 @@ class AuthManager with ChangeNotifier{
     await _googleSignIn.signInSilently();
     await _googleSignIn.requestScopes(scopes);
     //final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    return await _googleSignIn.authenticatedClient();
+    _authClient = await _googleSignIn.authenticatedClient();
+    return _authClient;
     //print('account: ${account?.toString()}');
   } catch (error) {
     print(error);
     await _googleSignIn.signIn();
     await _googleSignIn.requestScopes(scopes);
-    return await _googleSignIn.authenticatedClient();
+    _authClient = await _googleSignIn.authenticatedClient();
+    return _authClient;
     }
   }
     get client{
