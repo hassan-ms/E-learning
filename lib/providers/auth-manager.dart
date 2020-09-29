@@ -27,6 +27,7 @@ class AuthManager with ChangeNotifier{
   Future signIn() async {
 
     final isSignedIn = await _googleSignIn.isSignedIn();
+    print("isSIGNEDIN: $isSignedIn");
     if (isSignedIn) {
     await _googleSignIn.signInSilently();
     await _googleSignIn.requestScopes(scopes);
@@ -35,6 +36,7 @@ class AuthManager with ChangeNotifier{
     return _authClient;
     //print('account: ${account?.toString()}');
     }else{
+    final GoogleSignIn _googleSignIn = GoogleSignIn.standard();
     await _googleSignIn.signIn();
     await _googleSignIn.requestScopes(scopes);
     _authClient = await _googleSignIn.authenticatedClient();

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elearning4/screens/course-screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<bool> onBackPress() {
-    openDialog();
+    //openDialog();
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => CourseScreen()), (route) => false);
     return Future.value(false);
   }
 
@@ -187,7 +189,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName("course-screen"));
+                  Navigator.pop(context, 1);
                 },
                 child: Row(
                   children: <Widget>[

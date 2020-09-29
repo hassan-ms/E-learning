@@ -79,7 +79,7 @@ class CourseScreen extends StatelessWidget {
                         title: 'chat with teacher',
                       ),
                       onTap: () {Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ChatLoginScreen()));}
+          context, MaterialPageRoute(builder: (context) => ChatLoginScreen(title: "WELCOME",)));}
                     ),
                     ClassItem(
                       svg: 'assets/icons/attendance.svg',
