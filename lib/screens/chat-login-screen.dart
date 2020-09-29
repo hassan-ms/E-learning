@@ -27,6 +27,7 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
 
   bool isLoading = false;
   bool isLoggedIn = false;
+  bool needFireLogIn = true;
   User currentUser;
 
   @override
@@ -39,7 +40,12 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
     this.setState(() {
       isLoading = true;
     });
-
+    if (needFireLogIn) {
+      handleSignIn();
+      this.setState(() {
+        needFireLogIn = false;
+      });
+    };
     prefs = await SharedPreferences.getInstance();
 
     isLoggedIn = await googleSignIn.isSignedIn();

@@ -187,7 +187,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, 1);
+                  Navigator.popUntil(context, ModalRoute.withName("course-screen"));
                 },
                 child: Row(
                   children: <Widget>[
