@@ -4,6 +4,7 @@ import '../widgets/class-itemn.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
 import '../providers/classroom-manager.dart';
+import 'chat-login-screen.dart';
 
 class CourseScreen extends StatelessWidget {
   @override
@@ -72,9 +73,13 @@ class CourseScreen extends StatelessWidget {
                       svg: 'assets/icons/meeting.svg',
                       title: 'Comming lectures',
                     ),
-                    ClassItem(
-                      svg: 'assets/icons/chat3.svg',
-                      title: 'chat with teacher',
+                    InkWell(
+                        child: ClassItem(
+                        svg: 'assets/icons/chat3.svg',
+                        title: 'chat with teacher',
+                      ),
+                      onTap: () {Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ChatLoginScreen()));}
                     ),
                     ClassItem(
                       svg: 'assets/icons/attendance.svg',

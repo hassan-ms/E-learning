@@ -45,14 +45,15 @@ class AuthManager with ChangeNotifier{
   }
 
   // TODO: Silent sign in
-   static Future<GoogleSignInAccount> signInSilently() async {
-    var account = _googleSignIn.signInSilently();
-    print('account: $account');
-    return account;
-   }
+  // static Future<GoogleSignInAccount> signInSilently() async {
+  //  var account = _googleSignIn.signInSilently();
+  //  print('account: $account');
+  //  return account;
+  // }
 
   static Future<void> signOut() async {
     try {
+      _googleSignIn.disconnect();
       _googleSignIn.signOut();
       print("DISCONNECTED");
     } catch (error) {
