@@ -25,15 +25,16 @@ class AuthManager with ChangeNotifier{
 
   static var _authClient;
   Future signIn() async {
-  try {
+
+    final isSignedIn = await _googleSignIn.isSignedIn();
+    if (isSignedIn) {
     await _googleSignIn.signInSilently();
     await _googleSignIn.requestScopes(scopes);
     //final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     _authClient = await _googleSignIn.authenticatedClient();
     return _authClient;
     //print('account: ${account?.toString()}');
-  } catch (error) {
-    print(error);
+    }else{
     await _googleSignIn.signIn();
     await _googleSignIn.requestScopes(scopes);
     _authClient = await _googleSignIn.authenticatedClient();
