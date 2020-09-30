@@ -167,7 +167,7 @@ class AnnouncementItem extends StatelessWidget {
                   ],
                 ),
               ),
-              material.materials.length == 0
+              material.materials.isEmpty
                   ? Container()
                   : Container(
                       height: 90,
@@ -181,9 +181,15 @@ class AnnouncementItem extends StatelessWidget {
                               //height: 30,
                               child: FlatButton(
                                   onPressed: () {
-                                    launch(material.materials[index].driveFile
-                                        .driveFile.alternateLink);
-                                    print(material.materials[index].form);
+                                    if (material.materials[index].driveFile!=null) {
+                                      launch(material.materials[index].driveFile.driveFile.alternateLink);
+                                    } else if(material.materials[index].youtubeVideo!=null) {
+                                      launch(material.materials[index].youtubeVideo.alternateLink);
+                                                                          }
+                                    else{
+                                      launch(material.materials[index].link.url);
+                                    }
+                                    
                                   },
                                   child: Image.asset(
                                     'assets/icons/book3.png',

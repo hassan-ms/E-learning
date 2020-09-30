@@ -13,10 +13,12 @@ class CourseScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(children: <Widget>[
           Container(
-        height: double.infinity,
-        alignment: Alignment.bottomCenter,
-        child: Image.asset('assets/images/success2.png',),
-      ),
+            height: double.infinity,
+            alignment: Alignment.bottomCenter,
+            child: Image.asset(
+              'assets/images/success2.png',
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -53,9 +55,8 @@ class CourseScreen extends StatelessWidget {
                         svg: 'assets/icons/assignment.svg',
                         title: 'Assignments',
                       ),
-                      onTap: () async {
-                        await Provider.of<ClassroomManager>(context)
-                            .fetchAssignments('24269433570');
+                      onTap: () {
+                        Navigator.of(context).pushNamed('assignments-screen');
                       },
                     ),
                     InkWell(
@@ -68,9 +69,13 @@ class CourseScreen extends StatelessWidget {
                             .getCourses();
                       },
                     ),
-                    ClassItem(
-                      svg: 'assets/icons/meeting.svg',
-                      title: 'Comming lectures',
+                    InkWell(
+                      child: ClassItem(
+                        svg: 'assets/icons/meeting.svg',
+                        title: 'Comming lectures',
+                        
+                      ),
+                      onTap:()=>Navigator.of(context).pushNamed('meetings-screen',arguments:'148352686559'),
                     ),
                     ClassItem(
                       svg: 'assets/icons/chat3.svg',

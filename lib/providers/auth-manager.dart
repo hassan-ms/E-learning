@@ -80,8 +80,6 @@ class AuthManager with ChangeNotifier{
     'https://www.googleapis.com/auth/classroom.coursework.students',
     'https://www.googleapis.com/auth/classroom.announcements',
     'https://www.googleapis.com/auth/drive.file',
-    'https://www.googleapis.com/auth/classroom.coursework.students.readonly',
-    'https://www.googleapis.com/auth/classroom.coursework.me.readonly',
     'https://www.googleapis.com/auth/classroom.coursework.me'
   ], (url){
     launch(url);
