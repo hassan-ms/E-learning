@@ -33,7 +33,7 @@ class _AddAssignmentState extends State<AddAssignment> {
     List<gc.Material> materials = [];
     if (_files.isNotEmpty) {
       final gfiles =
-          await Provider.of<ClassroomManager>(context).uploadFiles(_files);
+          await Provider.of<ClassroomManager>(context).uploadAssignment('148352686559',_files);
       gfiles.forEach((element) {
         materials.add(gc.Material.fromJson({
           "driveFile": {

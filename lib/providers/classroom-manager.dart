@@ -103,7 +103,7 @@ class ClassroomManager with ChangeNotifier {
     }
   }
 
-  Future<List<ga.File>> uploadFiles(List<dynamic> files) async {
+  Future<List<ga.File>> uploadFiles(folder,List<dynamic> files) async {
     //final course=await classroom.courses.get('148352686559');
 
     List<ga.File> gfiles = [];
@@ -111,7 +111,7 @@ class ClassroomManager with ChangeNotifier {
       final file = File(element.path);
       ga.File fileToUpload = ga.File();
       fileToUpload.parents = [
-        '0BzfsOody00jffkVZY2ZaU0FMMnZLRWs1bmhlY2djcTZqc1V5X1J0eEpxbE1aUm9UTmJnLTg'
+        folder
       ];
       fileToUpload.name = element.name;
       var f = await drive.files.create(fileToUpload,
@@ -160,5 +160,13 @@ class ClassroomManager with ChangeNotifier {
     } catch (e) {
       throw e;
     }
+  }
+    Future uploadAssignment(courseId,files)async{
+    final response = await classroom.courses.students.get('148352686559', 'me');
+    final folder=response.studentWorkFolder.title;
+   // return  uploadFiles(folder, files);
+   print(folder);
+    
+    
   }
 }
