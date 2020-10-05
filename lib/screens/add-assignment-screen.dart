@@ -14,7 +14,7 @@ class AddAssignment extends StatefulWidget {
 class _AddAssignmentState extends State<AddAssignment> {
   final _formKey = GlobalKey<FormState>();
   String _title;
-  String _description="";
+  String _description = "";
   List<PlatformFile> _files = [];
   String _link;
   bool drive_drop = false;
@@ -29,11 +29,12 @@ class _AddAssignmentState extends State<AddAssignment> {
     setState(() {
       _isLoading = true;
     });
-    gc.CourseWork assignment =gc.CourseWork();
+    gc.CourseWork assignment = gc.CourseWork();
     List<gc.Material> materials = [];
     if (_files.isNotEmpty) {
-      final gfiles =
-          await Provider.of<ClassroomManager>(context).uploadAssignment('148352686559',_files);
+      final gfiles = await Provider.of<ClassroomManager>(context).uploadFiles(
+          '0BzfsOody00jffkVZY2ZaU0FMMnZLRWs1bmhlY2djcTZqc1V5X1J0eEpxbE1aUm9UTmJnLTg',
+          _files);
       gfiles.forEach((element) {
         materials.add(gc.Material.fromJson({
           "driveFile": {
@@ -52,17 +53,23 @@ class _AddAssignmentState extends State<AddAssignment> {
         }
       }));
     }
-    assignment.title=_title;
-    assignment.description=_description;
+    assignment.title = _title;
+    assignment.description = _description;
     assignment.materials = materials;
-    assignment.workType="ASSIGNMENT";
-    assignment.state="PUBLISHED";
-    
-  await Provider.of<ClassroomManager>(context).createAssignment(assignment,'148352686559' );
+    assignment.workType = "ASSIGNMENT";
+    assignment.state = "PUBLISHED";
+    try {
+      await Provider.of<ClassroomManager>(context).createAssignment(assignment);
+
+      Navigator.of(context).pop();
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(content: Text('network error please try again')),
+      );
+    }
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pop();
   }
 
   @override
@@ -108,7 +115,8 @@ class _AddAssignmentState extends State<AddAssignment> {
                   ],
                 ),
                 _isLoading
-                    ? Center(
+                    ? Container(
+                      padding: EdgeInsets.symmetric(vertical: 50),
                         child: CircularProgressIndicator(),
                       )
                     : Container(
@@ -141,11 +149,10 @@ class _AddAssignmentState extends State<AddAssignment> {
                                 ),
                                 TextFormField(
                                   maxLines: 2,
-                                  onChanged: (val)=>_description=val,
+                                  onChanged: (val) => _description = val,
                                   keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    labelText: 'description'
-                                  ),
+                                  decoration:
+                                      InputDecoration(labelText: 'description'),
                                 ),
                                 SizedBox(
                                   height: 20,

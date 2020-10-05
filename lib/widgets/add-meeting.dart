@@ -44,6 +44,7 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
       return;
     }
     await Provider.of<MeetingsManager>(context).addMetting(Meeting(
+        id: DateTime.now().toString(),
         course: widget.courseId,
         time: _pickedtime,
         title: _title,

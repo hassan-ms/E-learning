@@ -1,23 +1,32 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:googleapis/classroom/v1.dart' as gc;
 import 'package:googleapis/drive/v3.dart' as ga;
 
 class ClassroomManager with ChangeNotifier {
   gc.ClassroomApi classroom;
   ga.DriveApi drive;
+  String _courseID='148352686559';
   // ClassroomManager(this.client){
   //    classroom=gc.ClassroomApi(client);
   // }
   List<gc.Announcement> _announcements = [];
   List<gc.CourseWork> _assignments = [];
+  List<gc.Course>_courses=[];
 
   List<gc.Announcement> get announcements {
     return _announcements;
   }
 
   List<gc.CourseWork> get assignments {
-    return _assignments;
+    return _assignments.reversed.toList();
+  }
+
+  List<gc.Course> get courses {
+    return _courses;
+  }
+  set courseId(courseID){
+    _courseID=courseID;
   }
 
   Future<void> setClient(authClient) async {
@@ -35,18 +44,22 @@ class ClassroomManager with ChangeNotifier {
     return response.alternateLink;
   }
 
-  Future<void> getCourses() async {
-    final coursat = await classroom.courses.list();
-    for (var course in coursat.courses) {
-      print('${course.name} : ${course.id} : ${course.enrollmentCode}');
-    }
+  Future<void> fetchCourses() async {
+    final courses = await classroom.courses.list();
+    _courses=courses.courses;
   }
 
-  Future<void> createAssignment(assignment, courseId) async {
-    final work =
-        await classroom.courses.courseWork.create(assignment, courseId);
+  Future<void> createAssignment(assignment) async {
+    try{
+      final work =
+        await classroom.courses.courseWork.create(assignment, _courseID);
     _assignments.add(work);
     notifyListeners();
+    }
+    catch(e){
+      throw e;
+    }
+    
   }
 
   Future<void> addStudent() async {
@@ -62,17 +75,17 @@ class ClassroomManager with ChangeNotifier {
   }
 
   // announcements
-  Future<void> getAnnouncements(courseId) async {
+  Future<void> getAnnouncements() async {
     try {
       final announcements =
-          await classroom.courses.announcements.list(courseId);
+          await classroom.courses.announcements.list(_courseID);
       _announcements = announcements.announcements;
     } catch (e) {
       throw e;
     }
   }
 
-  Future<void> addAnnouncement({@required courseId, @required announce}) async {
+  Future<void> addAnnouncement({ @required announce}) async {
     try {
       //  final announcement= await classroom.courses.announcements.create(gc.Announcement.fromJson(
       //    {
@@ -83,7 +96,7 @@ class ClassroomManager with ChangeNotifier {
       //    }
       //  ), courseId);
       final announcement =
-          await classroom.courses.announcements.create(announce, courseId);
+          await classroom.courses.announcements.create(announce, _courseID);
       _announcements.add(announcement);
     } catch (e) {
       print(e);
@@ -92,10 +105,10 @@ class ClassroomManager with ChangeNotifier {
   }
 
   //assignments
-  Future<void> fetchAssignments(courseId) async {
+  Future<void> fetchAssignments() async {
     //final assignments=await classroom.courses.courseWork.list(courseId);
     try {
-      final assignments = await classroom.courses.courseWork.list(courseId);
+      final assignments = await classroom.courses.courseWork.list(_courseID);
       _assignments = assignments.courseWork;
       notifyListeners();
     } catch (e) {
@@ -162,8 +175,8 @@ class ClassroomManager with ChangeNotifier {
     }
   }
     Future uploadAssignment(courseId,files)async{
-    final response = await classroom.courses.students.get('148352686559', 'me');
-    final folder=response.studentWorkFolder.title;
+    final response = await classroom.courses.get(_courseID);
+    final folder=response.teacherFolder.id;
    // return  uploadFiles(folder, files);
    print(folder);
     

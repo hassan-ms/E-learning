@@ -54,7 +54,7 @@ class _AddMaterialsState extends State<AddMaterials> {
     announcement.text = _title;
     announcement.materials = materials;
     await Provider.of<ClassroomManager>(context)
-        .addAnnouncement(courseId: '148352686559', announce: announcement);
+        .addAnnouncement(announce: announcement);
 
     setState(() {
       _isLoading = false;

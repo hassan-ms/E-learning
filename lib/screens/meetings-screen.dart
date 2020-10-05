@@ -1,5 +1,6 @@
 import 'package:elearning4/widgets/MeetingItem.dart';
 import 'package:elearning4/widgets/app-bar.dart';
+import 'package:elearning4/widgets/teacher-meeting-item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/meetings.dart';
@@ -7,13 +8,14 @@ import '../constants.dart';
 import '../widgets/add-meeting.dart';
 
 class MeetingsScreeen extends StatelessWidget {
+  final bool _isteacher = true;
   @override
   Widget build(BuildContext context) {
-    
     final courseID = ModalRoute.of(context).settings.arguments;
-    final meetings = Provider.of<MeetingsManager>(context).meetings;
+    List meetings = Provider.of<MeetingsManager>(context).meetings;
+
+    meetings.reversed.toList();
     return Scaffold(
-     
       body: SafeArea(
         child: Column(
           children: [
@@ -41,43 +43,46 @@ class MeetingsScreeen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                //border: Border.all(width: 0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              margin: EdgeInsets.only(top: 20, bottom: 12, left: 11, right: 11),
-              padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Create Lecture',
-                    style: kSubheadingextStyle.copyWith(fontSize: 20),
-                  ),
-                  IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => AddMeetingScreen(
-                                  courseId: courseID,
-                                ));
-                      }),
-                ],
-              ),
-            ),
-          
+            _isteacher
+                ? Container(
+                    decoration: BoxDecoration(
+                      //border: Border.all(width: 0.1),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 12, left: 11, right: 11),
+                    padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Create Lecture',
+                          style: kSubheadingextStyle.copyWith(fontSize: 20),
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => AddMeetingScreen(
+                                        courseId: courseID,
+                                      ));
+                            }),
+                      ],
+                    ),
+                  )
+                : Container(),
             Container(
               height: 500,
-              child: meetings.isEmpty
-                  ? Center(
-                      child: Text('no Lectures added'),
-                    )
+              alignment: Alignment.center,
+              child: (meetings.isEmpty || meetings == null)
+                  ? Text('no Lectures added')
                   : ListView.builder(
-                      itemBuilder: (ctx, index) => MeetingItem(meetings[index]),
+                      itemBuilder: (ctx, index) => _isteacher
+                          ? TeacherMeetingItem(meetings[index])
+                          : MeetingItem(meetings[index]),
                       itemCount: meetings.length,
-                    ).reverse,
+                    ),
             )
           ],
         ),

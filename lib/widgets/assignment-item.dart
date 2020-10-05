@@ -50,27 +50,28 @@ class _AssignmentItemState extends State<AssignmentItem> {
           ListTile(
             title: Text(widget.title),
             subtitle: Text(widget.date),
-            trailing: FlatButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        List submissions = [];
-                        return HandIn(
-                          courseWorkId:widget.assignmentId,
-                          courseId: '148352686559',
-                          submissions: submissions,
-                        );
-                      });
-                },
-                child: Text(
-                  'Hand In',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                )),
-            // _isExpanded? Icon(Icons.arrow_drop_up):Icon(Icons.arrow_drop_down),
+             trailing:_isExpanded? Icon(Icons.arrow_drop_up):Icon(Icons.arrow_drop_down),
+            // FlatButton(
+            //     onPressed: () {
+            //       showModalBottomSheet(
+            //           context: context,
+            //           builder: (context) {
+            //             List submissions = [];
+            //             return HandIn(
+            //               courseWorkId:widget.assignmentId,
+            //               courseId: '148352686559',
+            //               submissions: submissions,
+            //             );
+            //           });
+            //     },
+            //     child: Text(
+            //       'Hand In',
+            //       style: TextStyle(
+            //           color: Colors.blue, fontWeight: FontWeight.bold),
+            //     )),
+            // 
             leading: Image.asset(
-              'assets/icons/done.png',
+              'assets/icons/assignment5.png',
               width: 100,
             ),
             onTap: () {
@@ -82,17 +83,25 @@ class _AssignmentItemState extends State<AssignmentItem> {
           AnimatedContainer(
             padding: EdgeInsets.symmetric(horizontal: 10),
             duration: Duration(milliseconds: 500),
-            height: _isExpanded ? 150 : 0,
+            height: _isExpanded ? 120 : 0,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(widget.description),
-                  Divider(),
-                  widget.materials==null
-                      ? Container(
-                          height: 0,
-                        )
+                  // Divider(),
+                  SizedBox(height: 10,),
+                  widget.description==null?Container():Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FittedBox(child: Text(widget.description)),
+                        SizedBox(height: 10,),
+                        Divider(),
+                      ],
+                    ),
+                  
+                  widget.materials==null||widget.materials.isEmpty
+                      ? Container()
                       : Container(
+                        padding: EdgeInsets.only(bottom:10 ),
                           child: Row(
                             children: widget.materials
                                 .map((e) => FlatButton(

@@ -21,9 +21,13 @@ class TheAppBar extends StatelessWidget {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            IconButton(icon :SvgPicture.asset("assets/icons/menu.svg",),onPressed: (){},),
+            IconButton(icon :SvgPicture.asset("assets/icons/menu.svg",),onPressed: (){
+              
+            },),
             Text("E-learning", style: kHeadingextStyle.copyWith(fontSize: 25)),
-            Image.asset("assets/images/user.png"),
+            FlatButton(child: Hero(child: Image.asset("assets/images/user.png"),tag: 1,),onPressed:(){
+              Navigator.of(context).pushNamed('profile-screen');
+            } ,),
           ],
         ),
     );

@@ -65,8 +65,8 @@ class CourseScreen extends StatelessWidget {
                         title: 'Exams',
                       ),
                       onTap: () async {
-                        await Provider.of<ClassroomManager>(context)
-                            .getCourses();
+                      //   await Provider.of<ClassroomManager>(context)
+                      //       .getCourses();
                       },
                     ),
                     InkWell(

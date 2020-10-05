@@ -9,6 +9,7 @@ class Meeting {
   final description;
   // final url;
   final mettingUrl;
+  final id;
 
   Meeting(
       {@required this.course,
@@ -16,21 +17,24 @@ class Meeting {
       this.description,
       @required this.title,
       @required this.date,
-      @required this.mettingUrl});
+      @required this.mettingUrl,
+      this.id
+      });
 }
 
 class MeetingsManager with ChangeNotifier {
   List<Meeting> _meetings = [
-    Meeting(
-        course: 'english',
-        time: TimeOfDay.now(),
-        title: 'meeting one',
-        date: DateTime.now(),
-        mettingUrl:
-            'https://meet.google.com/qdn-vwjy-rsj?fbclid=IwAR1pPxpROO4-pUN92EJFqmoEdA41oYGUUaMajl_mC1q6Z_Bk95htqT981OM'),
+  //   Meeting(
+  //       course: 'english',
+  //       time: TimeOfDay.now(),
+  //       title: 'meeting one',
+  //       date: DateTime.now(),
+  //       mettingUrl:
+  //           'https://meet.google.com/qdn-vwjy-rsj?fbclid=IwAR1pPxpROO4-pUN92EJFqmoEdA41oYGUUaMajl_mC1q6Z_Bk95htqT981OM'),
+  // 
   ];
   List<Meeting> get meetings {
-    return _meetings;
+    return _meetings.reversed.toList();
   }
 
   void addMetting(Meeting meeting) {
@@ -39,5 +43,10 @@ class MeetingsManager with ChangeNotifier {
       print(element.title);
     });
     notifyListeners();
+  }
+
+  Future<void>removeMeeting(id){
+      _meetings.removeWhere((element) => element.id==id);
+      notifyListeners();
   }
 }

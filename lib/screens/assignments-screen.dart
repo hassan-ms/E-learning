@@ -14,6 +14,7 @@ class AssignmentScreen extends StatefulWidget {
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
   bool _isLoading = false;
+  
   @override
   void initState() {
     setState(() {
@@ -21,10 +22,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     });
     try {
       Future.delayed(Duration.zero, () async {
-        final courseId ='148352686559';
-
-        await Provider.of<ClassroomManager>(context, listen: false)
-            .fetchAssignments(courseId);
+         await Provider.of<ClassroomManager>(context, listen: false)
+            .fetchAssignments();
       });
     } catch (e) {
       print(e);
@@ -39,6 +38,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final md = MediaQuery.of(context);
+    final height = md.size.height - md.padding.top - 240;
     final assignments = Provider.of<ClassroomManager>(context).assignments;
     return Scaffold(
       body: SafeArea(
@@ -46,19 +47,34 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
           child: Column(
             children: [
               TheAppBar(),
-              Container(
-                  padding: EdgeInsets.only(top: 5, bottom: 12, left: 10),
-                  child: Text("Assignments",
-                      style: kSubheadingextStyle.copyWith(
-                          fontWeight: FontWeight.bold))),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.1),
-                  borderRadius: BorderRadius.circular(30),
+             Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/graduate.jpg',
+                      width: 50,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Assignments",
+                        style: kSubheadingextStyle.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 26),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/icons/graduate.jpg',
+                      width: 50,
+                    ),
+                  ],
                 ),
+              Container(
+                
                 margin:
-                    EdgeInsets.only(top: 5, bottom: 12, left: 11, right: 11),
-                padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
+                    EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                //padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -76,7 +92,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
               ),
               Container(
                
-                height:500 ,
+                height:height ,
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => AssignmentItem(
                     assignmentId: assignments[index].id,

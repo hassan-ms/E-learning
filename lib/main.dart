@@ -1,16 +1,17 @@
 import 'package:elearning4/providers/auth-manager.dart';
 import 'package:elearning4/providers/classroom-manager.dart';
 import 'package:elearning4/providers/meetings.dart';
+import 'package:elearning4/screens/Home-screen.dart';
 import 'package:elearning4/screens/add-assignment-screen.dart';
 import 'package:elearning4/screens/add-materials-screen.dart';
 import 'package:elearning4/screens/assignments-screen.dart';
-import 'package:elearning4/screens/classroom-screen.dart';
 import 'package:elearning4/screens/course-screen.dart';
 import 'package:elearning4/screens/login-screen.dart';
 import 'package:elearning4/screens/materials-screen.dart';
 import 'package:elearning4/screens/meetings-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './screens/profile-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,13 +35,14 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginScreen(),
       routes: {
-        'classroom-screen':(ctx)=>ClassRoomScreen(),
+        'home-screen':(ctx)=>HomeScreen(),
         'course-screen':(ctx)=>CourseScreen(),
         'material-screen':(ctx)=>MaterialsScreen(),
         'add-materials':(ctx)=>AddMaterials(),
         'assignments-screen':(ctx)=>AssignmentScreen(),
         'add-assignment':(ctx)=>AddAssignment(),
         'meetings-screen':(ctx)=>MeetingsScreeen(),
+        'profile-screen':(ctx)=>ProfileScreen(),
       },
     
     )
