@@ -1,3 +1,4 @@
+import 'package:elearning4/providers/auth-manager.dart';
 import 'package:elearning4/widgets/MeetingItem.dart';
 import 'package:elearning4/widgets/app-bar.dart';
 import 'package:elearning4/widgets/teacher-meeting-item.dart';
@@ -8,11 +9,13 @@ import '../constants.dart';
 import '../widgets/add-meeting.dart';
 
 class MeetingsScreeen extends StatelessWidget {
-  final bool _isteacher = true;
+  
   @override
   Widget build(BuildContext context) {
+     
     final courseID = ModalRoute.of(context).settings.arguments;
     List meetings = Provider.of<MeetingsManager>(context).meetings;
+    bool _isteacher = Provider.of<AuthManager>(context).isTeacher;
 
     meetings.reversed.toList();
     return Scaffold(

@@ -1,38 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:googleapis/classroom/v1.dart' as gc;
 
 import '../constants.dart';
+
 class CourseItem extends StatelessWidget {
   final gc.Course course;
+  final int index;
+  const CourseItem(this.course, this.index);
 
-  const CourseItem(this.course);
-  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+    Color color = Color.fromRGBO(94, 98, 172, 1);
+    Color textColor = Colors.white;
+    String svgUrl='assets/images/grad.svg';
+    // int x=index%4;
+    if (index == 3) {
+      color = Color.fromRGBO(26, 184, 254, 1);
+    
+    } else if (index == 0 || index == 2) {
+      color = Colors.white;
+      textColor = Colors.black;
+      svgUrl='assets/icons/undraw_mathematics_4otb.svg';
+    }
+    return InkWell(
+          child: Container(
+        margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.grey, width: 0.3),
+          color: color,
         ),
-        elevation: 10,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SvgPicture.asset(
-              'assets/images/grad.svg',
-              height: 100,
-              
+        height: index.isEven ? 180 : 220,
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(top:50),
+              alignment: Alignment.center,
+              child:Opacity(opacity: 0.8,child: SvgPicture.asset(svgUrl,width: index.isEven?150:190,)),
             ),
-            Text(
-              course.name,
-              style: kSubheadingextStyle.copyWith(
-                  fontSize: 17, fontWeight: FontWeight.bold),
-            )
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      course.name,
+                      style: kTitleTextStyle.copyWith(color: textColor),
+                    )),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                      icon: Icon(Icons.more_horiz, color: textColor),
+                      onPressed: () {}),
+                ),
+              ],
+            ),
           ],
         ),
       ),
+      onTap: (){
+        Navigator.of(context).pushReplacementNamed('course-screen');
+      },
     );
   }
 }

@@ -9,12 +9,12 @@ import '../providers/auth-manager.dart';
 
 class LoginScreen extends StatelessWidget {
   Future _handleSignIn(BuildContext ctx) async {
-    await Provider.of<AuthManager>(ctx).loginByBrowser();
+    await Provider.of<AuthManager>(ctx).signIn();
     //var client=GoogleHttpClient(await account.authHeaders);
     var client = Provider.of<AuthManager>(ctx).client;
     if (client != null) {
       await Provider.of<ClassroomManager>(ctx).setClient(client);
-      Navigator.of(ctx).pushReplacementNamed('course-screen');
+      Navigator.of(ctx).pushReplacementNamed('home-screen');
     }
     return null;
   }

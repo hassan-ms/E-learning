@@ -1,6 +1,7 @@
 import 'package:elearning4/providers/classroom-manager.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
@@ -17,6 +18,8 @@ class _AddAssignmentState extends State<AddAssignment> {
   String _description = "";
   List<PlatformFile> _files = [];
   String _link;
+  DateTime _pickedDate;
+  TimeOfDay _pickedTime;
   bool drive_drop = false;
   bool _isLoading = false;
 
@@ -58,18 +61,49 @@ class _AddAssignmentState extends State<AddAssignment> {
     assignment.materials = materials;
     assignment.workType = "ASSIGNMENT";
     assignment.state = "PUBLISHED";
+    gc.Date dDate=new gc.Date();
+    gc.TimeOfDay dTime=new gc.TimeOfDay();
+    dDate.day=_pickedDate.day;
+    dDate.month=_pickedDate.month;
+    dDate.year=_pickedDate.year;
+    assignment.dueDate=dDate;
+    dTime.hours=_pickedTime.hour;
+    dTime.minutes=_pickedTime.minute;
+    assignment.dueTime=dTime;
     try {
-      await Provider.of<ClassroomManager>(context).createAssignment(assignment);
+      await Provider.of<ClassroomManager>(ctx).createAssignment(assignment);
 
       Navigator.of(context).pop();
     } catch (e) {
-      Scaffold.of(context).showSnackBar(
+      Scaffold.of(ctx).showSnackBar(
         SnackBar(content: Text('network error please try again')),
       );
-    }
+      print(e);    }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void _pickDate(ctx) async {
+    final date = await showDatePicker(
+        context: ctx,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(DateTime.now().year + 1));
+    if (date != null) {
+      setState(() {
+        _pickedDate = date;
+      });
+      
+    }
+    TimeOfDay t =
+        await showTimePicker(context: ctx, initialTime: TimeOfDay.now());
+
+    if (t != null) {
+      setState(() {
+        _pickedTime = t;
+      });
+  }
   }
 
   @override
@@ -116,7 +150,7 @@ class _AddAssignmentState extends State<AddAssignment> {
                 ),
                 _isLoading
                     ? Container(
-                      padding: EdgeInsets.symmetric(vertical: 50),
+                        padding: EdgeInsets.symmetric(vertical: 50),
                         child: CircularProgressIndicator(),
                       )
                     : Container(
@@ -154,8 +188,34 @@ class _AddAssignmentState extends State<AddAssignment> {
                                   decoration:
                                       InputDecoration(labelText: 'description'),
                                 ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 20, top: 10,),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Due date',
+                                          style: kSubheadingextStyle.copyWith(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),),
+                                      (_pickedDate == null || _pickedTime==null)
+                                          ? FlatButton(
+                                              child: Text(
+                                                'Pick Date',
+                                                style: TextStyle(
+                                                    color: Colors.blue),
+                                              ),
+                                              onPressed: () {
+                                                _pickDate(context);
+                                              })
+                                          : Text(
+                                              '${DateFormat("dd/MM/yyyy").format(_pickedDate)}   ${_pickedTime.hour}:${_pickedTime.minute}'),
+                                    ],
+                                  ),
+                                ),
+                                Divider(thickness:0.7,color: Colors.grey,),
                                 SizedBox(
-                                  height: 20,
+                                  height: 0,
                                 ),
                                 Text(
                                   'Files :',
@@ -342,3 +402,5 @@ class _AddAssignmentState extends State<AddAssignment> {
     );
   }
 }
+
+ 

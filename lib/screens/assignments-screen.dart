@@ -101,6 +101,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                           .format(DateTime.parse(assignments[index].creationTime)),
                     description: assignments[index].description,
                     materials: assignments[index].materials,
+                    dueDate: assignments[index].dueDate,
                   ),
                   itemCount: assignments.length,
                 ),

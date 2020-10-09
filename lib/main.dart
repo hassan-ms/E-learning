@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginScreen(),
       routes: {
+        'login-screen':(ctx)=>LoginScreen(),
         'home-screen':(ctx)=>HomeScreen(),
         'course-screen':(ctx)=>CourseScreen(),
         'material-screen':(ctx)=>MaterialsScreen(),

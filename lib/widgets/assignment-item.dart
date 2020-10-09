@@ -9,14 +9,16 @@ class AssignmentItem extends StatefulWidget {
   final title;
   final date;
   final description;
-  final List materials;
+  final List<gc.Material> materials;
   final assignmentId;
+  final dueDate;
   AssignmentItem(
       {@required this.title,
       @required this.date,
       @required this.description,
       @required this.materials,
-      @required this.assignmentId});
+      @required this.assignmentId,
+      @required this.dueDate});
   @override
   _AssignmentItemState createState() => _AssignmentItemState();
 }
@@ -39,6 +41,7 @@ class _AssignmentItemState extends State<AssignmentItem> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isteacher = true;
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -50,7 +53,48 @@ class _AssignmentItemState extends State<AssignmentItem> {
           ListTile(
             title: Text(widget.title),
             subtitle: Text(widget.date),
-             trailing:_isExpanded? Icon(Icons.arrow_drop_up):Icon(Icons.arrow_drop_down),
+            trailing: _isteacher
+                ? IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              title: Text('Delete Assignment '),
+                              content:
+                                  Text('Are you sure to delete Assignment ?'),
+                              actions: <Widget>[
+                                FlatButton(
+                                    onPressed: () async {
+                                      Navigator.of(ctx).pop(true);
+                                      try {
+                                        await Provider.of<ClassroomManager>(
+                                                context)
+                                            .deleteAssignment(
+                                                widget.assignmentId);
+                                      } catch (e) {
+                                        print(e);
+                                        Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  'network error please try again')),
+                                        );
+                                      }
+                                    },
+                                    child: Text('Yes')),
+                                FlatButton(
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop(false);
+                                    },
+                                    child: Text('No'))
+                              ],
+                            );
+                          });
+                    })
+                : _isExpanded
+                    ? Icon(Icons.arrow_drop_up)
+                    : Icon(Icons.arrow_drop_down),
             // FlatButton(
             //     onPressed: () {
             //       showModalBottomSheet(
@@ -69,7 +113,7 @@ class _AssignmentItemState extends State<AssignmentItem> {
             //       style: TextStyle(
             //           color: Colors.blue, fontWeight: FontWeight.bold),
             //     )),
-            // 
+            //
             leading: Image.asset(
               'assets/icons/assignment5.png',
               width: 100,
@@ -86,27 +130,49 @@ class _AssignmentItemState extends State<AssignmentItem> {
             height: _isExpanded ? 120 : 0,
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Divider(),
-                  SizedBox(height: 10,),
-                  widget.description==null?Container():Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FittedBox(child: Text(widget.description)),
-                        SizedBox(height: 10,),
-                        Divider(),
-                      ],
-                    ),
-                  
-                  widget.materials==null||widget.materials.isEmpty
+                  SizedBox(
+                    height: 10,
+                  ),
+                  widget.description == null
+                      ? Container()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.description),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(),
+                          ],
+                        ),
+
+                  widget.materials == null || widget.materials.isEmpty
                       ? Container()
                       : Container(
-                        padding: EdgeInsets.only(bottom:10 ),
+                          padding: EdgeInsets.only(bottom: 10),
                           child: Row(
                             children: widget.materials
                                 .map((e) => FlatButton(
                                     onPressed: () {
-                                      launch(widget.materials[e].link);
+                                       if (e.driveFile != null) {
+                                              launch(e.driveFile.driveFile
+                                                  .alternateLink);
+                                            } else if (e.youtubeVideo != null) {
+                                              launch(
+                                                  e.youtubeVideo.alternateLink);
+                                            } else if(e.link!=null) {
+                                              launch(e.link.url);
+                                            }
+                                            else{
+                                              Scaffold.of(context).showSnackBar(
+                                                SnackBar(
+                                                    content: Text(
+                                                        'undefined attachement')),
+                                              );
+                                            }
                                     },
                                     child: Image.asset(
                                       'assets/icons/book3.png',
@@ -114,30 +180,15 @@ class _AssignmentItemState extends State<AssignmentItem> {
                                     )))
                                 .toList(),
                           ),
-                          // child: GridView.builder(
-                          //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          //       crossAxisCount: 4),
-                          //   itemBuilder: (ctx, index) {
-                          //     return Container(
-                          //         margin: EdgeInsets.all(0),
-                          //         padding: EdgeInsets.all(0),
-                          //         //height: 30,
-                          //         child: FlatButton(
-                          //             onPressed: () {
-                          //               launch(widget.materials.materials[index].link);
-                          //             },
-                          //             child: Image.asset(
-                          //               'assets/icons/book3.png',
-                          //               height: 50,
-                          //             )));
-                          //   },
-                          //   itemCount: widget.materials.materials.length,
-                          // )
                         ),
+                        widget.dueDate!=null?Container(
+                          padding: EdgeInsets.only(bottom: 5),
+                          alignment: Alignment.bottomRight,
+                          child: Text('required at ${widget.dueDate.day}/${widget.dueDate.month}/${widget.dueDate.year}',style: TextStyle(color: Colors.blueAccent),)):Container()
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -105,7 +105,8 @@ class _AddMaterialsState extends State<AddMaterials> {
                   ],
                 ),
                 _isLoading
-                    ? Center(
+                    ? Container(
+                      margin: EdgeInsets.symmetric(vertical:50),
                         child: CircularProgressIndicator(),
                       )
                     : Container(

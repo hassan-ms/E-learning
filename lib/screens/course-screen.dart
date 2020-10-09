@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../widgets/class-itemn.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
-import '../providers/classroom-manager.dart';
 
 class CourseScreen extends StatelessWidget {
   @override
@@ -32,65 +30,68 @@ class CourseScreen extends StatelessWidget {
               ),
               //Text("Find a course you want to learn", style: kSubheadingextStyle),
               //end appbar
-              Container(
-                padding: EdgeInsets.only(left: 15, top: 20, right: 15),
-                height: size.height * 0.75,
-                child: GridView.count(
-                  crossAxisCount: size.width < 500 ? 2 : 4,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  children: <Widget>[
-                    InkWell(
-                      child: ClassItem(
-                        svg: 'assets/icons/teaching.svg',
-                        title: 'Materials',
+              Expanded(
+                              child: Container(
+                  padding: EdgeInsets.only(left: 15, top: 20, right: 15),
+                  //height: size.height * 0.75,
+                  child: GridView.count(
+                    crossAxisCount: size.width < 500 ? 2 : 4,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    children: <Widget>[
+                      InkWell(
+                        child: ClassItem(
+                          svg: 'assets/icons/teaching.svg',
+                          title: 'Materials',
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('material-screen',
+                              arguments: '148352686559');
+                        },
                       ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('material-screen',
-                            arguments: '148352686559');
-                      },
-                    ),
-                    InkWell(
-                      child: ClassItem(
-                        svg: 'assets/icons/assignment.svg',
-                        title: 'Assignments',
+                      InkWell(
+                        child: ClassItem(
+                          svg: 'assets/icons/assignment.svg',
+                          title: 'Assignments',
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('assignments-screen');
+                        },
                       ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('assignments-screen');
-                      },
-                    ),
-                    InkWell(
-                      child: ClassItem(
-                        svg: 'assets/icons/exam.svg',
-                        title: 'Exams',
+                      InkWell(
+                        child: ClassItem(
+                          svg: 'assets/icons/exam.svg',
+                          title: 'Exams',
+                        ),
+                        onTap: () async {
+                        //   await Provider.of<ClassroomManager>(context)
+                        //       .getCourses();
+                        },
                       ),
-                      onTap: () async {
-                      //   await Provider.of<ClassroomManager>(context)
-                      //       .getCourses();
-                      },
-                    ),
-                    InkWell(
-                      child: ClassItem(
-                        svg: 'assets/icons/meeting.svg',
-                        title: 'Comming lectures',
-                        
+                      InkWell(
+                        child: ClassItem(
+                          svg: 'assets/icons/meeting.svg',
+                          title: 'Comming lectures',
+                          
+                        ),
+                        onTap:()=>Navigator.of(context).pushNamed('meetings-screen',arguments:'148352686559'),
                       ),
-                      onTap:()=>Navigator.of(context).pushNamed('meetings-screen',arguments:'148352686559'),
-                    ),
-                    ClassItem(
-                      svg: 'assets/icons/chat3.svg',
-                      title: 'chat with teacher',
-                    ),
-                    ClassItem(
-                      svg: 'assets/icons/attendance.svg',
-                      title: 'Attendance',
-                    ),
-                  ],
+                      ClassItem(
+                        svg: 'assets/icons/chat3.svg',
+                        title: 'chat with teacher',
+                      ),
+                      ClassItem(
+                        svg: 'assets/icons/attendance.svg',
+                        title: 'Attendance',
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
           ),
         ]),
+        
       ),
     );
   }

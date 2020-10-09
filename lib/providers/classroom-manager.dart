@@ -45,8 +45,12 @@ class ClassroomManager with ChangeNotifier {
   }
 
   Future<void> fetchCourses() async {
-    final courses = await classroom.courses.list();
-    _courses=courses.courses;
+    try{final courses = await classroom.courses.list();
+    _courses=courses.courses;}
+    catch(e){
+      throw e;
+    }
+    notifyListeners();
   }
 
   Future<void> createAssignment(assignment) async {
@@ -182,4 +186,22 @@ class ClassroomManager with ChangeNotifier {
     
     
   }
+  Future<void>deleteAssignment(assId)async{
+    try {
+     await classroom.courses.courseWork.delete(_courseID, assId);
+     _assignments.removeWhere((element) => element.id==assId);
+    } catch (e) {
+      throw e;
+    }
+    notifyListeners();
+  }
+  Future<void>removeAnnouncement(id)async{
+    try {
+      await classroom.courses.announcements.delete(_courseID,id);
+    } catch (e) {
+      throw e;
+    }
+    notifyListeners();
+  }
+  
 }

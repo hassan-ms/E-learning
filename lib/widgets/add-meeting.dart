@@ -26,8 +26,6 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
       setState(() {
         _pickedDate = date;
       });
-
-      print(date);
     }
     TimeOfDay t =
         await showTimePicker(context: ctx, initialTime: TimeOfDay.now());

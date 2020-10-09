@@ -1,4 +1,6 @@
+import 'package:elearning4/providers/auth-manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class TheAppBar extends StatelessWidget {
@@ -10,6 +12,7 @@ class TheAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profilePic=Provider.of<AuthManager>(context,listen: false).profilePic;
     return Container(
       decoration: BoxDecoration(
         //color: Colors.white,
@@ -25,7 +28,7 @@ class TheAppBar extends StatelessWidget {
               
             },),
             Text("E-learning", style: kHeadingextStyle.copyWith(fontSize: 25)),
-            FlatButton(child: Hero(child: Image.asset("assets/images/user.png"),tag: 1,),onPressed:(){
+            FlatButton(child: Hero(child: CircleAvatar(backgroundImage: profilePic,) ,tag: 1,),onPressed:(){
               Navigator.of(context).pushNamed('profile-screen');
             } ,),
           ],
