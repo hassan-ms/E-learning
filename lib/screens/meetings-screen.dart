@@ -15,7 +15,7 @@ class MeetingsScreeen extends StatelessWidget {
      
     final courseID = ModalRoute.of(context).settings.arguments;
     List meetings = Provider.of<MeetingsManager>(context).meetings;
-    bool _isteacher = Provider.of<AuthManager>(context).isTeacher;
+    bool _isteacher = Provider.of<AuthManager>(context,listen: false).isTeacher;
 
     meetings.reversed.toList();
     return Scaffold(
