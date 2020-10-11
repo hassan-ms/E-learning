@@ -50,7 +50,6 @@ class AuthManager with ChangeNotifier{
 
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    _authClient = await googleSignIn.authenticatedClient();
 
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -101,7 +100,8 @@ class AuthManager with ChangeNotifier{
       isLoading = false;
     }
 
-
+    _authClient = await googleSignIn.authenticatedClient();
+    return null;
 		// if (isSignedIn) {
 		// await googleSignIn.signInSilently();
 		// await googleSignIn.requestScopes(scopes);

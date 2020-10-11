@@ -12,8 +12,8 @@ class LoginScreen extends StatelessWidget {
   Future _handleSignIn(BuildContext ctx) async {
    // await Provider.of<AuthManager>(ctx).loginByBrowser();
     //var client=GoogleHttpClient(await account.authHeaders);
-    Provider.of<AuthManager>(ctx).signIn();
-    var client = Provider.of<AuthManager>(ctx).client();
+    await Provider.of<AuthManager>(ctx).signIn();
+    var client = Provider.of<AuthManager>(ctx).client;
     if (client != null) {
       await Provider.of<ClassroomManager>(ctx).setClient(client);
       Navigator.of(ctx).pushReplacementNamed('course-screen');
