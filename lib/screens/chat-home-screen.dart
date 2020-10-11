@@ -249,7 +249,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'MAIN',
+          'Chat',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
