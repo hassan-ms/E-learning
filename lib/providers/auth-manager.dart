@@ -49,6 +49,7 @@ class AuthManager with ChangeNotifier{
     isLoading = true;
 
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    await googleSignIn.requestScopes(scopes);
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
