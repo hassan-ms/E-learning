@@ -5,6 +5,7 @@ import '../constants.dart';
 import '../widgets/app-bar.dart';
 import '../providers/classroom-manager.dart';
 import 'chat-login-screen.dart';
+import 'chat-home-screen.dart';
 
 class CourseScreen extends StatelessWidget {
   @override
@@ -79,7 +80,7 @@ class CourseScreen extends StatelessWidget {
                         title: 'chat with teacher',
                       ),
                       onTap: () {Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ChatLoginScreen(title: "WELCOME",)));}
+          context, MaterialPageRoute(builder: (context) => ChatHomeScreen()));}
                     ),
                     ClassItem(
                       svg: 'assets/icons/attendance.svg',

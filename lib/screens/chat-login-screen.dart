@@ -40,12 +40,7 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
     this.setState(() {
       isLoading = true;
     });
-    if (needFireLogIn) {
-      handleSignIn();
-      this.setState(() {
-        needFireLogIn = false;
-      });
-    };
+    
     prefs = await SharedPreferences.getInstance();
 
     isLoggedIn = await googleSignIn.isSignedIn();
@@ -54,8 +49,8 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                HomeScreen(currentUserId: prefs.getString('id'))),
-      );
+                ChatHomeScreen(),
+      ));
     }
 
     this.setState(() {
@@ -122,7 +117,7 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  HomeScreen(currentUserId: firebaseUser.uid)));
+                  ChatHomeScreen()));
     } else {
       Fluttertoast.showToast(msg: "Sign in fail");
       this.setState(() {

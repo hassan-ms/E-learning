@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
   Future _handleSignIn(BuildContext ctx) async {
    // await Provider.of<AuthManager>(ctx).loginByBrowser();
     //var client=GoogleHttpClient(await account.authHeaders);
-    var client = Provider.of<AuthManager>(ctx).signIn();
+    Provider.of<AuthManager>(ctx).signIn();
+    var client = Provider.of<AuthManager>(ctx).client();
     if (client != null) {
       await Provider.of<ClassroomManager>(ctx).setClient(client);
       Navigator.of(ctx).pushReplacementNamed('course-screen');
@@ -82,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                 elevation: 8,
               )),
            FlatButton(
-               onPressed: () => AuthManager.signOut(), child: Text('logout')),
+               onPressed: () => Provider.of<AuthManager>(context).signOut(), child: Text('logout')),
         ],
       ),
     ]));

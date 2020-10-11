@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning4/screens/course-screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth-manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,19 +19,19 @@ import 'package:elearning4/main.dart';
 import 'chat-chat-screen.dart';
 import 'chat-settings-screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  final String currentUserId;
+class ChatHomeScreen extends StatefulWidget {
 
-  HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
+
+  ChatHomeScreen({Key key,}) : super(key: key);
 
   @override
-  State createState() => HomeScreenState(currentUserId: currentUserId);
+  State createState() => ChatHomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
-  HomeScreenState({Key key, @required this.currentUserId});
+class ChatHomeScreenState extends State<ChatHomeScreen> {
+  ChatHomeScreenState({Key key,});
 
-  final String currentUserId;
+  var currentUserId;
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -46,6 +48,11 @@ class HomeScreenState extends State<HomeScreen> {
     super.initState();
     registerNotification();
     configLocalNotification();
+    setUserId();
+  }
+
+  void setUserId(){
+    currentUserId = Provider.of<AuthManager>(context).firebaseUserId;
   }
 
   void registerNotification() {
@@ -224,7 +231,7 @@ class HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
 
-    await FirebaseAuth.instance.signOut();
+
     await googleSignIn.disconnect();
     await googleSignIn.signOut();
 
