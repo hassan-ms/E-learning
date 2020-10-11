@@ -40,7 +40,12 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
     this.setState(() {
       isLoading = true;
     });
-    
+    if (needFireLogIn) {
+      handleSignIn();
+      this.setState(() {
+        needFireLogIn = false;
+      });
+    }
     prefs = await SharedPreferences.getInstance();
 
     isLoggedIn = await googleSignIn.isSignedIn();
@@ -49,8 +54,8 @@ class ChatLoginScreenState extends State<ChatLoginScreen> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                ChatHomeScreen(),
-      ));
+                ChatHomeScreen()),
+      );
     }
 
     this.setState(() {

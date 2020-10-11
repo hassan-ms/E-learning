@@ -8,6 +8,7 @@ import 'package:elearning4/screens/course-screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth-manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -51,8 +52,9 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
     setUserId();
   }
 
-  void setUserId(){
-    currentUserId = Provider.of<AuthManager>(context).firebaseUserId;
+  void setUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    currentUserId = prefs.getString('id');
   }
 
   void registerNotification() {

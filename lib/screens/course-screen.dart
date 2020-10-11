@@ -4,7 +4,7 @@ import '../widgets/class-itemn.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
 import '../providers/classroom-manager.dart';
-import 'chat-login-screen.dart';
+// import 'chat-login-screen.dart';
 import 'chat-home-screen.dart';
 
 class CourseScreen extends StatelessWidget {

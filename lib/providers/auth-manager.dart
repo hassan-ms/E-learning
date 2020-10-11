@@ -68,6 +68,7 @@ class AuthManager with ChangeNotifier{
       final List<DocumentSnapshot> documents = result.docs;
       if (documents.length == 0) {
         // Update data to server if new user
+        print("New User in Firestore");
         FirebaseFirestore.instance
             .collection('users')
             .doc(firebaseUser.uid)
@@ -86,6 +87,7 @@ class AuthManager with ChangeNotifier{
         await prefs.setString('photoUrl', currentUser.photoURL);
       } else {
         // Write data to local
+        print("Old User on Firestore");
         await prefs.setString('id', documents[0].data()['id']);
         await prefs.setString('nickname', documents[0].data()['nickname']);
         await prefs.setString('photoUrl', documents[0].data()['photoUrl']);
