@@ -34,9 +34,8 @@ class AuthManager with ChangeNotifier{
 
   bool isLoading = false;
   bool isLoggedIn = false;
-  bool needFireLogIn = true;
   User currentUser;
-  String firebaseUserId;
+  static String firebaseUserId;
 
   static var _authClient;
 	
