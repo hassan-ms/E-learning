@@ -90,7 +90,7 @@ class AuthManager with ChangeNotifier{
         // Write data to local
         print("Old User on Firestore");
         await prefs.setString('id', documents[0].data()['id']);
-        await prefs.setString('modarrs', documents[0].data()['modarrs']);
+        await prefs.setBool('modarrs', documents[0].data()['modarrs']);
         await prefs.setString('nickname', documents[0].data()['nickname']);
         await prefs.setString('photoUrl', documents[0].data()['photoUrl']);
         await prefs.setString('aboutMe', documents[0].data()['aboutMe']);

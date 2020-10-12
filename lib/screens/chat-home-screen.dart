@@ -31,7 +31,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
   ChatHomeScreenState({Key key,});
 
   var currentUserId;
-  var modarrs;
+  bool toSeeModarrs;
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -49,8 +49,17 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
   void setUserId() async {
     final prefs = await SharedPreferences.getInstance();
     currentUserId = prefs.getString('id');
-    modarrs = prefs.getString('modarrs');
+    toSeeModarrs = !prefs.getBool('modarrs');
+    print(toSeeModarrs.toString());
   }
+
+  // bool checkModarrs(){
+  //   if (element.get('modarrs') == modarrs){
+  //     return false;
+  //   }else{
+  //     return true;
+  //   }
+  // }
 
   void registerNotification() {
     firebaseMessaging.requestNotificationPermissions();
@@ -146,8 +155,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
           Container(
             child: StreamBuilder(
               stream:
-                  FirebaseFirestore.instance.collection('users').snapshots()
-                  .where((event) => event.docs.every((element) => modarrs ? !element.get('modarrs') : element.get('modarrs') )),
+                  FirebaseFirestore.instance.collection('users').where('modarrs', isEqualTo: toSeeModarrs).snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
