@@ -10,6 +10,7 @@ import 'package:elearning4/screens/login-screen.dart';
 import 'package:elearning4/screens/materials-screen.dart';
 import 'package:elearning4/screens/meetings-screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/profile-screen.dart';
@@ -17,13 +18,15 @@ import './screens/profile-screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+ 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return MultiProvider(providers: [
       ChangeNotifierProvider.value(value: MeetingsManager()),
       ChangeNotifierProvider.value(value:AuthManager()),
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: Provider.of<AuthManager>(context).isSignedIn ? CourseScreen() : LoginScreen(),
       routes: {
         'login-screen':(ctx)=>LoginScreen(),
         'home-screen':(ctx)=>HomeScreen(),

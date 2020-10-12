@@ -5,16 +5,13 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning4/screens/course-screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:elearning4/constants.dart';
 import 'package:elearning4/widgets/loading.dart';
-import 'package:elearning4/main.dart';
 import 'chat-chat-screen.dart';
 import 'chat-settings-screen.dart';
 
