@@ -76,6 +76,7 @@ class AuthManager with ChangeNotifier{
           'nickname': firebaseUser.displayName,
           'photoUrl': firebaseUser.photoURL,
           'id': firebaseUser.uid,
+          'modarrs': false,
           'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
           'chattingWith': null
         });
@@ -89,6 +90,7 @@ class AuthManager with ChangeNotifier{
         // Write data to local
         print("Old User on Firestore");
         await prefs.setString('id', documents[0].data()['id']);
+        await prefs.setString('modarrs', documents[0].data()['modarrs']);
         await prefs.setString('nickname', documents[0].data()['nickname']);
         await prefs.setString('photoUrl', documents[0].data()['photoUrl']);
         await prefs.setString('aboutMe', documents[0].data()['aboutMe']);
