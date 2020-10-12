@@ -54,19 +54,18 @@ class AuthManager with ChangeNotifier{
 
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
     final isDone = await googleSignIn.requestScopes(scopes);
-    //final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
     if (isDone) {
       final client = await googleSignIn.authenticatedClient();
       _authClient = client;
       _profilePic = NetworkImage(googleUser.photoUrl);
       _name = googleUser.displayName;
     }
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+    // GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     User firebaseUser =
         (await firebaseAuth.signInWithCredential(credential)).user;

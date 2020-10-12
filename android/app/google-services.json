@@ -1,45 +1,63 @@
 {
   "project_info": {
-    "project_number": "19932950879",
-    "firebase_url": "https://elearning4-f41eb.firebaseio.com",
-    "project_id": "elearning4-f41eb",
-    "storage_bucket": "elearning4-f41eb.appspot.com"
+    "project_number": "922804100633",
+    "firebase_url": "https://e-learn-1.firebaseio.com",
+    "project_id": "e-learn-1",
+    "storage_bucket": "e-learn-1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:19932950879:android:aa51e9802ab0e2101706ea",
+        "mobilesdk_app_id": "1:922804100633:android:d36b132eb0d3f59957d488",
         "android_client_info": {
           "package_name": "com.example.elearning4"
         }
       },
       "oauth_client": [
         {
-          "client_id": "19932950879-18t9khm302m9n9t7m439t95kcpsdr24q.apps.googleusercontent.com",
+          "client_id": "922804100633-fh4d7j653mit3rmpaumvuluadtimc4ae.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.elearning4",
-            "certificate_hash": "2bd92de68d56b4bc572ce1386af64b52c8e51950"
+            "certificate_hash": "133fd019ffada3065c3d16b5d997674660bd0404"
           }
         },
         {
-          "client_id": "19932950879-eikmeuo98dagm1hst3jelfca49gei7k5.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "922804100633-fmgmvb3ok8eoo3o9f3ce30761gicu921.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.elearning4",
+            "certificate_hash": "8bdc7a2f3892bcad3d42c7659c2f67bded3d34d0"
+          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDiZNRwxjRS913GWyu-4qSo5xEnh-wkLMI"
+          "current_key": "AIzaSyDb3YBI_t3CtRpkp7fR6UM9KAmrJ_s9GEI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "19932950879-eikmeuo98dagm1hst3jelfca49gei7k5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922804100633:android:599205ccd625d1c257d488",
+        "android_client_info": {
+          "package_name": "io.flutter.plugins.googlesigninexample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb3YBI_t3CtRpkp7fR6UM9KAmrJ_s9GEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }
