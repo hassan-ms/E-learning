@@ -42,7 +42,9 @@ class ProfileScreen extends StatelessWidget {
             height: 40,
           ),
           buildItem('Home', Icons.home),
-          buildItem('Setting', Icons.settings),
+          InkWell(child: buildItem('invitaions', Icons.settings),onTap: (){
+            Navigator.of(context).pushReplacementNamed('invitations-screen');
+          },),
           buildItem('Profile', Icons.person),
           InkWell(
             child: buildItem('Logout', Icons.exit_to_app),

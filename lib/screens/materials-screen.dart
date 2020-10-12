@@ -13,15 +13,14 @@ class MaterialsScreen extends StatelessWidget {
       await Provider.of<ClassroomManager>(context)
           .getAnnouncements();
     } catch (e) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(content: Text('network error please try again')),
-      );
+      displayError(context);
     }
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
        
@@ -97,16 +96,19 @@ class MaterialsScreen extends StatelessWidget {
                           ? Center(
                               child: Text('no materials found'),
                             )
-                          : Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: size.height * 0.65,
-                              child: ListView.builder(
-                                itemBuilder: (ctx, index) => AnnouncementItem(
-                                  isteacher: _isteacher,
-                                    material: classroom.announcements[index]),
-                                itemCount: classroom.announcements.length,
+                          : Expanded(
+
+                                                      child: Container(
+                                margin: EdgeInsets.only(top: 10),
+                                
+                                child: ListView.builder(
+                                  itemBuilder: (ctx, index) => AnnouncementItem(
+                                    isteacher: _isteacher,
+                                      material: classroom.announcements[index]),
+                                  itemCount: classroom.announcements.length,
+                                ),
                               ),
-                            ),
+                          ),
                     )),
             future: _refresh(context),
           ),

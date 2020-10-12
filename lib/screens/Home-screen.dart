@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: _isLoading?Center(
               child: CircularProgressIndicator(),
             ):Consumer<ClassroomManager>(builder: (ctx,classroom,_){
-                  List bcourses= seeAll ? classroom.courses : classroom.courses.take(4).toList();
+                  List bcourses= classroom.courses==null?[]:(seeAll ? classroom.courses : classroom.courses.take(4).toList());
                  return (bcourses.isEmpty ||bcourses==null)?
                  Center(
                   child: Text('no courses found'),

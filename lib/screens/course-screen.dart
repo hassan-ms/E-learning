@@ -6,7 +6,7 @@ import '../widgets/app-bar.dart';
 class CourseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+   // var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Stack(children: <Widget>[
@@ -20,7 +20,7 @@ class CourseScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TheAppBar(size: size),
+              TheAppBar(),
               Container(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
@@ -35,7 +35,7 @@ class CourseScreen extends StatelessWidget {
                   padding: EdgeInsets.only(left: 15, top: 20, right: 15),
                   //height: size.height * 0.75,
                   child: GridView.count(
-                    crossAxisCount: size.width < 500 ? 2 : 4,
+                    crossAxisCount:2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     children: <Widget>[

@@ -6,6 +6,7 @@ import 'package:elearning4/screens/add-assignment-screen.dart';
 import 'package:elearning4/screens/add-materials-screen.dart';
 import 'package:elearning4/screens/assignments-screen.dart';
 import 'package:elearning4/screens/course-screen.dart';
+import 'package:elearning4/screens/invitaions-screeen.dart';
 import 'package:elearning4/screens/login-screen.dart';
 import 'package:elearning4/screens/materials-screen.dart';
 import 'package:elearning4/screens/meetings-screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         'add-assignment':(ctx)=>AddAssignment(),
         'meetings-screen':(ctx)=>MeetingsScreeen(),
         'profile-screen':(ctx)=>ProfileScreen(),
+        'invitations-screen':(ctx)=>InvitaionsScreeen(),
       },
     
     )

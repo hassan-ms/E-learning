@@ -24,14 +24,14 @@ class Meeting {
 
 class MeetingsManager with ChangeNotifier {
   List<Meeting> _meetings = [
-  //   Meeting(
-  //       course: 'english',
-  //       time: TimeOfDay.now(),
-  //       title: 'meeting one',
-  //       date: DateTime.now(),
-  //       mettingUrl:
-  //           'https://meet.google.com/qdn-vwjy-rsj?fbclid=IwAR1pPxpROO4-pUN92EJFqmoEdA41oYGUUaMajl_mC1q6Z_Bk95htqT981OM'),
-  // 
+    Meeting(
+        course: 'english',
+        time: TimeOfDay.now(),
+        title: 'meeting one',
+        date: DateTime.now(),
+        mettingUrl:
+            'https://meet.google.com/qdn-vwjy-rsj?fbclid=IwAR1pPxpROO4-pUN92EJFqmoEdA41oYGUUaMajl_mC1q6Z_Bk95htqT981OM'),
+  
   ];
   List<Meeting> get meetings {
     return _meetings.reversed.toList();

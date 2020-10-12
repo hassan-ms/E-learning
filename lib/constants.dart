@@ -29,3 +29,8 @@ const kSubtitleTextSyule = TextStyle(
   color: kTextColor,
   // fontWeight: FontWeight.bold,
 );
+void displayError(context) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(content: Text('network error please try again')),
+    );
+  }

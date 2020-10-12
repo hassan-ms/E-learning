@@ -14,7 +14,7 @@ class AssignmentScreen extends StatefulWidget {
 
 class _AssignmentScreenState extends State<AssignmentScreen> {
   bool _isLoading = false;
-  
+
   @override
   void initState() {
     setState(() {
@@ -22,7 +22,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     });
     try {
       Future.delayed(Duration.zero, () async {
-         await Provider.of<ClassroomManager>(context, listen: false)
+        await Provider.of<ClassroomManager>(context, listen: false)
             .fetchAssignments();
       });
     } catch (e) {
@@ -35,11 +35,10 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-     final md = MediaQuery.of(context);
-    final height = md.size.height - md.padding.top - 240;
+    //  final md = MediaQuery.of(context);
+    // final height = md.size.height - md.padding.top - 240;
     final assignments = Provider.of<ClassroomManager>(context).assignments;
     return Scaffold(
       body: SafeArea(
@@ -47,31 +46,30 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
           child: Column(
             children: [
               TheAppBar(),
-             Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/icons/graduate.jpg',
-                      width: 50,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/icons/graduate.jpg',
+                    width: 50,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Assignments",
+                      style: kSubheadingextStyle.copyWith(
+                          fontWeight: FontWeight.bold, fontSize: 26),
+                      textAlign: TextAlign.center,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Assignments",
-                        style: kSubheadingextStyle.copyWith(
-                            fontWeight: FontWeight.bold, fontSize: 26),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/icons/graduate.jpg',
-                      width: 50,
-                    ),
-                  ],
-                ),
+                  ),
+                  Image.asset(
+                    'assets/icons/graduate.jpg',
+                    width: 50,
+                  ),
+                ],
+              ),
               Container(
-                
                 margin:
                     EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
                 //padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
@@ -90,15 +88,13 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                   ],
                 ),
               ),
-              Container(
-               
-                height:height ,
+              Expanded(
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => AssignmentItem(
                     assignmentId: assignments[index].id,
                     title: assignments[index].title,
-                    date: DateFormat('dd-MM-yyyy')
-                          .format(DateTime.parse(assignments[index].creationTime)),
+                    date: DateFormat('dd-MM-yyyy').format(
+                        DateTime.parse(assignments[index].creationTime)),
                     description: assignments[index].description,
                     materials: assignments[index].materials,
                     dueDate: assignments[index].dueDate,

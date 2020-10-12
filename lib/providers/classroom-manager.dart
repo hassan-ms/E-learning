@@ -13,6 +13,7 @@ class ClassroomManager with ChangeNotifier {
   List<gc.Announcement> _announcements = [];
   List<gc.CourseWork> _assignments = [];
   List<gc.Course>_courses=[];
+  List<gc.Invitation>_invitaions=[];
 
   List<gc.Announcement> get announcements {
     return _announcements;
@@ -45,7 +46,8 @@ class ClassroomManager with ChangeNotifier {
   }
 
   Future<void> fetchCourses() async {
-    try{final courses = await classroom.courses.list();
+    try{
+      final courses = await classroom.courses.list();
     _courses=courses.courses;}
     catch(e){
       throw e;
@@ -203,5 +205,27 @@ class ClassroomManager with ChangeNotifier {
     }
     notifyListeners();
   }
-  
+  // invitaions
+  Future<void>fetchInvitaions()async{
+    try {
+      final invitaions=await classroom.invitations.list();
+      if(invitaions!=null){
+        _invitaions=invitaions.invitations;
+      }
+    } catch (e) {
+      throw e;
+    }
+    notifyListeners();
+  }
+ List<gc.Invitation> get invitaions{
+    return _invitaions;
+  } 
+  Future<void>acceptInvitaion(id)async{
+     try {
+       await classroom.invitations.accept(id);
+     } catch (e) {
+       throw e;
+     }
+     notifyListeners();
+  } 
 }

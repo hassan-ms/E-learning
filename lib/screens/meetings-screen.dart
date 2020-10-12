@@ -9,13 +9,12 @@ import '../constants.dart';
 import '../widgets/add-meeting.dart';
 
 class MeetingsScreeen extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
-     
     final courseID = ModalRoute.of(context).settings.arguments;
     List meetings = Provider.of<MeetingsManager>(context).meetings;
-    bool _isteacher = Provider.of<AuthManager>(context,listen: false).isTeacher;
+    bool _isteacher =
+        Provider.of<AuthManager>(context, listen: false).isTeacher;
 
     meetings.reversed.toList();
     return Scaffold(
@@ -75,17 +74,18 @@ class MeetingsScreeen extends StatelessWidget {
                     ),
                   )
                 : Container(),
-            Container(
-              height: 500,
-              alignment: Alignment.center,
-              child: (meetings.isEmpty || meetings == null)
-                  ? Text('no Lectures added')
-                  : ListView.builder(
-                      itemBuilder: (ctx, index) => _isteacher
-                          ? TeacherMeetingItem(meetings[index])
-                          : MeetingItem(meetings[index]),
-                      itemCount: meetings.length,
-                    ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: (meetings.isEmpty || meetings == null)
+                    ? Text('no Lectures added')
+                    : ListView.builder(
+                        itemBuilder: (ctx, index) => _isteacher
+                            ? TeacherMeetingItem(meetings[index])
+                            : MeetingItem(meetings[index]),
+                        itemCount: meetings.length,
+                      ),
+              ),
             )
           ],
         ),

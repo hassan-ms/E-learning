@@ -12,7 +12,7 @@ class TheAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profilePic=Provider.of<AuthManager>(context,listen: false).profilePic;
+    final profilePic=Provider.of<AuthManager>(context).profilePic;
     return Container(
       decoration: BoxDecoration(
         //color: Colors.white,
