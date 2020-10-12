@@ -13,6 +13,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/profile-screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +22,34 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  // TODO: Skip login if already logged in
+  // SharedPreferences prefs;
+  // bool isSignedIn = false;
+  // void initState() {
+  //   startfunction();
+  // }
+  // void startfunction() async{
+  //   prefs = await SharedPreferences.getInstance();
+  //   isSignedIn = prefs.getBool('isSignedIn');
+  //   print(isSignedIn.toString());
+  // }
+
+  // Widget checkSignInforScreen(){
+  //   if(isSignedIn){
+  //     return CourseScreen();
+  //   }else{
+  //     return CourseScreen();
+  //   }
+  // }
+
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider.value(value: MeetingsManager()),
