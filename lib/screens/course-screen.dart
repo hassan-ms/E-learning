@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/class-itemn.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
+// import 'chat-login-screen.dart';
+import 'chat-home-screen.dart';
 
 class CourseScreen extends StatelessWidget {
   @override
@@ -76,9 +78,13 @@ class CourseScreen extends StatelessWidget {
                         ),
                         onTap:()=>Navigator.of(context).pushNamed('meetings-screen',arguments:'148352686559'),
                       ),
-                      ClassItem(
+                      InkWell(
+                        child: ClassItem(
                         svg: 'assets/icons/chat3.svg',
                         title: 'chat with teacher',
+                      ),
+                      onTap: () {Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => ChatHomeScreen()));}         
                       ),
                       ClassItem(
                         svg: 'assets/icons/attendance.svg',

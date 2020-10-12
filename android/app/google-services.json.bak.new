@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "922804100633-fh4d7j653mit3rmpaumvuluadtimc4ae.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.elearning4",
-            "certificate_hash": "133fd019ffada3065c3d16b5d997674660bd0404"
-          }
-        },
-        {
           "client_id": "922804100633-fmgmvb3ok8eoo3o9f3ce30761gicu921.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

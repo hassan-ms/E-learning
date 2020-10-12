@@ -9,11 +9,16 @@ import 'package:elearning4/screens/course-screen.dart';
 import 'package:elearning4/screens/login-screen.dart';
 import 'package:elearning4/screens/materials-screen.dart';
 import 'package:elearning4/screens/meetings-screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/profile-screen.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
