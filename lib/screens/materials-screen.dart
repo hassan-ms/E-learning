@@ -4,54 +4,27 @@ import '../constants.dart';
 import '../widgets/app-bar.dart';
 import '../providers/classroom-manager.dart';
 import 'package:provider/provider.dart';
-
+import '../widgets/heading.dart';
 
 class MaterialsScreen extends StatelessWidget {
   final bool _isteacher = true;
   Future<void> _refresh(context) async {
     try {
-      await Provider.of<ClassroomManager>(context)
-          .getAnnouncements();
+      await Provider.of<ClassroomManager>(context).getAnnouncements();
     } catch (e) {
       displayError(context);
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-       
           body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TheAppBar(
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/icons/graduate.jpg',
-                width: 50,
-              ),
-              Container(
-                padding: EdgeInsets.only(bottom: 7, right: 10, left: 10),
-                alignment: Alignment.center,
-                child: Text(
-                  "Materials",
-                  style: kSubheadingextStyle.copyWith(
-                      fontWeight: FontWeight.bold, fontSize: 26),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Image.asset(
-                'assets/icons/graduate.jpg',
-                width: 50,
-              ),
-            ],
-          ),
+          TheAppBar(),
+          Heading('Materials'),
           SizedBox(
             height: 15,
           ),
@@ -84,8 +57,8 @@ class MaterialsScreen extends StatelessWidget {
             builder: (ctx, snapShot) => snapShot.connectionState ==
                     ConnectionState.waiting
                 ? Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(top: 50),
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 50),
                     child: CircularProgressIndicator(),
                   )
                 : RefreshIndicator(
@@ -97,26 +70,22 @@ class MaterialsScreen extends StatelessWidget {
                               child: Text('no materials found'),
                             )
                           : Expanded(
-
-                                                      child: Container(
+                              child: Container(
                                 margin: EdgeInsets.only(top: 10),
-                                
                                 child: ListView.builder(
                                   itemBuilder: (ctx, index) => AnnouncementItem(
-                                    isteacher: _isteacher,
+                                      isteacher: _isteacher,
                                       material: classroom.announcements[index]),
                                   itemCount: classroom.announcements.length,
                                 ),
                               ),
-                          ),
+                            ),
                     )),
             future: _refresh(context),
           ),
-          
         ],
       )),
     );
   }
 }
-
 

@@ -28,7 +28,9 @@ class TheAppBar extends StatelessWidget {
               
             },),
             Text("E-learning", style: kHeadingextStyle.copyWith(fontSize: 25)),
-            FlatButton(child: Hero(child: CircleAvatar(backgroundImage: profilePic,) ,tag: 1,),onPressed:(){
+            FlatButton(child: Hero(child: CircleAvatar(backgroundImage: profilePic == null
+                      ? AssetImage('assets/images/st2.png')
+                      :profilePic,) ,tag: 1,),onPressed:(){
               Navigator.of(context).pushNamed('profile-screen');
             } ,),
           ],

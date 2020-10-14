@@ -1,4 +1,6 @@
+import 'package:elearning4/providers/classroom-manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../widgets/class-itemn.dart';
 import '../constants.dart';
 import '../widgets/app-bar.dart';
@@ -66,8 +68,8 @@ class CourseScreen extends StatelessWidget {
                           title: 'Exams',
                         ),
                         onTap: () async {
-                        //   await Provider.of<ClassroomManager>(context)
-                        //       .getCourses();
+                          await Provider.of<ClassroomManager>(context)
+                              .setTeacherFolder();
                         },
                       ),
                       InkWell(

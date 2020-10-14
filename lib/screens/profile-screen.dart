@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
             height: 20,
           ),
           Text(
-            name,
+           name==null? 'none':name,
             style: TextStyle(
                 color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
           ),

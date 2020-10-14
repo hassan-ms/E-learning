@@ -208,17 +208,22 @@ class ClassroomManager with ChangeNotifier {
   // invitaions
   Future<void>fetchInvitaions()async{
     try {
-      final invitaions=await classroom.invitations.list();
-      if(invitaions!=null){
-        _invitaions=invitaions.invitations;
-      }
+      final invitations=await classroom.invitations.list(userId: 'me');
+      // if(invitations!=null){
+      //   _invitaions=invitations.invitations;
+      //   invitations.invitations.forEach((element) {
+      //     print(' role :${element.id}');
+      //   });
+      // }
+    print(invitations.invitations);
     } catch (e) {
-      throw e;
+      print(e);
     }
     notifyListeners();
   }
  List<gc.Invitation> get invitaions{
     return _invitaions;
+    
   } 
   Future<void>acceptInvitaion(id)async{
      try {
@@ -228,4 +233,9 @@ class ClassroomManager with ChangeNotifier {
      }
      notifyListeners();
   } 
+
+  Future<void> setTeacherFolder()async{
+   final student= await classroom.courses.students.get(_courseID, 'me');
+    print(student.studentWorkFolder.alternateLink);
+  }
 }
