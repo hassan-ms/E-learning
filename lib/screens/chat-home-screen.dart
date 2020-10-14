@@ -47,7 +47,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     currentUserId = prefs.getString('id');
     toSeeModarrs = !prefs.getBool('modarrs');
-    print(toSeeModarrs.toString());
+    // print(toSeeModarrs.toString());
   }
 
   // bool checkModarrs(){
@@ -131,6 +131,13 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
   }
 
 
+  Stream<dynamic> modQuery() { 
+    Stream<QuerySnapshot> q = FirebaseFirestore.instance.collection('users').where('modarrs', isEqualTo: toSeeModarrs).snapshots();
+    var m = q.forEach((element) {element.docs.forEach((element) {print(element.data());});});
+    print(m);
+    return q;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,7 +159,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
           Container(
             child: StreamBuilder(
               stream:
-                  FirebaseFirestore.instance.collection('users').where('modarrs', isEqualTo: toSeeModarrs).snapshots(),
+                  modQuery(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -164,8 +171,8 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
                   return ListView.builder(
                     padding: EdgeInsets.all(10.0),
                     itemBuilder: (context, index) =>
-                        buildItem(context, snapshot.data.documents[index]),
-                    itemCount: snapshot.data.documents.length,
+                        buildItem(context, snapshot.data.docs[index]),
+                    itemCount: snapshot.data.docs.length,
                   );
                 }
               },

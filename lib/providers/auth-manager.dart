@@ -136,6 +136,7 @@ class AuthManager with ChangeNotifier{
       await FirebaseAuth.instance.signOut();
 			await googleSignIn.disconnect();
 			await googleSignIn.signOut();
+      await prefs.setBool('isSignedIn', false);
 			print("DISCONNECTED");
 		} catch (error) {
 			print(error);
