@@ -150,8 +150,8 @@ class _AddAssignmentState extends State<AddAssignment> {
                 ),
                 _isLoading
                     ? Container(
-                        padding: EdgeInsets.symmetric(vertical: 50),
-                        child: CircularProgressIndicator(),
+                        padding: EdgeInsets.symmetric(vertical: 200),
+                        child: Text('uploading...'),
                       )
                     : Container(
                         padding: EdgeInsets.all(5),
@@ -402,5 +402,3 @@ class _AddAssignmentState extends State<AddAssignment> {
     );
   }
 }
-
- 

@@ -1,3 +1,4 @@
+import 'package:elearning4/providers/auth-manager.dart';
 import 'package:elearning4/providers/classroom-manager.dart';
 import 'package:elearning4/widgets/app-bar.dart';
 import 'package:elearning4/widgets/course-item.dart';
@@ -45,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final name=Provider.of<AuthManager>(context,listen:false).name; 
     // final courses = Provider.of<ClassroomManager>(context).courses;
     //  List aCourses = seeAll ? courses : courses.take(4).toList();
 
@@ -54,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // bool _isLandScape = md.orientation == Orientation.landscape;
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomNavBar(),
+        bottomNavigationBar: BottomNavBar(false),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             ):Consumer<ClassroomManager>(builder: (ctx,classroom,_){
                   List bcourses= classroom.courses==null?[]:(seeAll ? classroom.courses : classroom.courses.take(4).toList());
-                 return (bcourses.isEmpty ||bcourses==null)?
+                 return (bcourses.isEmpty)?
                  Center(
                   child: Text('no courses found'),
                 ):

@@ -53,24 +53,25 @@ class MaterialsScreen extends StatelessWidget {
                   ),
                 )
               : Container(),
-          FutureBuilder(
-            builder: (ctx, snapShot) => snapShot.connectionState ==
-                    ConnectionState.waiting
-                ? Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 50),
-                    child: CircularProgressIndicator(),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () => _refresh(ctx),
-                    child: Consumer<ClassroomManager>(
-                      builder: (ctx, classroom, _) => classroom
-                              .announcements.isEmpty
-                          ? Center(
-                              child: Text('no materials found'),
-                            )
-                          : Expanded(
-                              child: Container(
+          Expanded(
+            child: RefreshIndicator(
+              
+              onRefresh: () => _refresh(context),
+              child: FutureBuilder(
+                builder: (ctx, snapShot) => snapShot.connectionState ==
+                        ConnectionState.waiting
+                    ? Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(top: 50),
+                        child: CircularProgressIndicator(),
+                      )
+                    : Consumer<ClassroomManager>(
+                        builder: (ctx, classroom, _) => classroom
+                                .announcements.isEmpty
+                            ? Center(
+                                child: Text('no materials found'),
+                              )
+                            : Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: ListView.builder(
                                   itemBuilder: (ctx, index) => AnnouncementItem(
@@ -79,13 +80,13 @@ class MaterialsScreen extends StatelessWidget {
                                   itemCount: classroom.announcements.length,
                                 ),
                               ),
-                            ),
-                    )),
-            future: _refresh(context),
+                      ),
+                future: _refresh(context),
+              ),
+            ),
           ),
         ],
       )),
     );
   }
 }
-

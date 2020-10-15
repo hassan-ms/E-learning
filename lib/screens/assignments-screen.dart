@@ -42,68 +42,68 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     final assignments = Provider.of<ClassroomManager>(context).assignments;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TheAppBar(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/icons/graduate.jpg',
-                    width: 50,
+        child: Column(
+          children: [
+            TheAppBar(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/icons/graduate.jpg',
+                  width: 50,
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Assignments",
+                    style: kSubheadingextStyle.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: 26),
+                    textAlign: TextAlign.center,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Assignments",
-                      style: kSubheadingextStyle.copyWith(
-                          fontWeight: FontWeight.bold, fontSize: 26),
-                      textAlign: TextAlign.center,
-                    ),
+                ),
+                Image.asset(
+                  'assets/icons/graduate.jpg',
+                  width: 50,
+                ),
+              ],
+            ),
+            Container(
+              margin:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+              //padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Add Assignment',
+                    style: kSubheadingextStyle.copyWith(fontSize: 20),
                   ),
-                  Image.asset(
-                    'assets/icons/graduate.jpg',
-                    width: 50,
-                  ),
+                  IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('add-assignment');
+                      }),
                 ],
               ),
-              Container(
-                margin:
-                    EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-                //padding: EdgeInsets.only(bottom: 5, left: 15, right: 11),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Add Assignment',
-                      style: kSubheadingextStyle.copyWith(fontSize: 20),
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('add-assignment');
-                        }),
-                  ],
+            ),
+            Expanded(
+              child: assignments.isEmpty?Center(
+               child:Text('no assignments found'),
+              ):ListView.builder(
+                itemBuilder: (ctx, index) => AssignmentItem(
+                  assignmentId: assignments[index].id,
+                  title: assignments[index].title,
+                  date: DateFormat('dd-MM-yyyy').format(
+                      DateTime.parse(assignments[index].creationTime)),
+                  description: assignments[index].description,
+                  materials: assignments[index].materials,
+                  dueDate: assignments[index].dueDate,
                 ),
+                itemCount: assignments.length,
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (ctx, index) => AssignmentItem(
-                    assignmentId: assignments[index].id,
-                    title: assignments[index].title,
-                    date: DateFormat('dd-MM-yyyy').format(
-                        DateTime.parse(assignments[index].creationTime)),
-                    description: assignments[index].description,
-                    materials: assignments[index].materials,
-                    dueDate: assignments[index].dueDate,
-                  ),
-                  itemCount: assignments.length,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

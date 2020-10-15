@@ -1,6 +1,8 @@
+import 'package:elearning4/providers/classroom-manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:googleapis/classroom/v1.dart' as gc;
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
@@ -62,6 +64,8 @@ class CourseItem extends StatelessWidget {
       ),
       onTap: (){
         Navigator.of(context).pushReplacementNamed('course-screen');
+        print(course.id);
+        Provider.of<ClassroomManager>(context,listen: false).emptyFields();
       },
     );
   }

@@ -82,8 +82,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 elevation: 8,
               )),
-           FlatButton(
-               onPressed: () => Provider.of<AuthManager>(context).signOut(), child: Text('logout')),
+          //  FlatButton(
+          //      onPressed: () => Provider.of<AuthManager>(context).signOut(), child: Text('logout')),
         ],
       ),
     ]));

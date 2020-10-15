@@ -107,7 +107,7 @@ class _AddMaterialsState extends State<AddMaterials> {
                 _isLoading
                     ? Container(
                       margin: EdgeInsets.symmetric(vertical:50),
-                        child: CircularProgressIndicator(),
+                        child: Text('Uploading...'),
                       )
                     : Container(
                         padding: EdgeInsets.all(5),

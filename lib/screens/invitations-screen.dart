@@ -7,11 +7,11 @@ import '../providers/classroom-manager.dart';
 import '../constants.dart';
 class InvitationsScreen extends StatelessWidget {
   Future<void> _refresh(context) async {
-    try {
-      await Provider.of<ClassroomManager>(context,listen:false).fetchInvitaions();
-    } catch (e) {
-      displayError(context);
-    }
+    // try {
+    //   await Provider.of<ClassroomManager>(context,listen:false).fetchInvitaions();
+    // } catch (e) {
+    //   displayError(context);
+    // }
   }
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class InvitationsScreen extends StatelessWidget {
                 : RefreshIndicator(
                     onRefresh: () => _refresh(ctx),
                     child: Consumer<ClassroomManager>(
-                      builder: (ctx, classroom, _) =>( classroom.invitaions==null)
+                      builder: (ctx, classroom, _) =>( classroom.invitaions.isEmpty)
                           ? Center(
                               child: Text('no invitations found'),
                             )

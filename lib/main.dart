@@ -5,6 +5,8 @@ import 'package:elearning4/screens/Home-screen.dart';
 import 'package:elearning4/screens/add-assignment-screen.dart';
 import 'package:elearning4/screens/add-materials-screen.dart';
 import 'package:elearning4/screens/assignments-screen.dart';
+import 'package:elearning4/screens/chat-home-screen.dart';
+import 'package:elearning4/screens/chat-settings-screen.dart';
 import 'package:elearning4/screens/course-screen.dart';
 import './screens/invitations-screen.dart';
 import 'package:elearning4/screens/login-screen.dart';
@@ -78,6 +80,8 @@ class _MyAppState extends State<MyApp> {
         'meetings-screen':(ctx)=>MeetingsScreeen(),
         'profile-screen':(ctx)=>ProfileScreen(),
        'invitations-screen':(ctx)=>InvitationsScreen(),
+       'chat-setting-screen':(ctx)=>ChatSettings(),
+       'chat-home-screen':(ctx)=>ChatHomeScreen(),
       },
     
     )

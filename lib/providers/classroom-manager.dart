@@ -85,7 +85,10 @@ class ClassroomManager with ChangeNotifier {
     try {
       final announcements =
           await classroom.courses.announcements.list(_courseID);
-      _announcements = announcements.announcements;
+          if(announcements.announcements!=null){
+            _announcements = announcements.announcements;
+          }
+      
     } catch (e) {
       throw e;
     }
@@ -115,7 +118,10 @@ class ClassroomManager with ChangeNotifier {
     //final assignments=await classroom.courses.courseWork.list(courseId);
     try {
       final assignments = await classroom.courses.courseWork.list(_courseID);
-      _assignments = assignments.courseWork;
+      if(assignments.courseWork!=null){
+        _assignments = assignments.courseWork;
+      }
+      
       notifyListeners();
     } catch (e) {
       print('error :$e');
@@ -237,5 +243,10 @@ class ClassroomManager with ChangeNotifier {
   Future<void> setTeacherFolder()async{
    final student= await classroom.courses.students.get(_courseID, 'me');
     print(student.studentWorkFolder.alternateLink);
+  }
+  void emptyFields(){
+    _announcements=[];
+    _assignments=[];
+    notifyListeners();
   }
 }

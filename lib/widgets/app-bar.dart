@@ -31,7 +31,7 @@ class TheAppBar extends StatelessWidget {
             FlatButton(child: Hero(child: CircleAvatar(backgroundImage: profilePic == null
                       ? AssetImage('assets/images/st2.png')
                       :profilePic,) ,tag: 1,),onPressed:(){
-              Navigator.of(context).pushNamed('profile-screen');
+              Navigator.of(context).pushReplacementNamed('profile-screen');
             } ,),
           ],
         ),

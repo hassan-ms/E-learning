@@ -5,6 +5,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elearning4/screens/course-screen.dart';
+import 'package:elearning4/widgets/app-bar.dart';
+import 'package:elearning4/widgets/bottom-nav-bar.dart';
+import 'package:elearning4/widgets/heading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +19,18 @@ import 'chat-chat-screen.dart';
 import 'chat-settings-screen.dart';
 
 class ChatHomeScreen extends StatefulWidget {
-
-
-  ChatHomeScreen({Key key,}) : super(key: key);
+  ChatHomeScreen({
+    Key key,
+  }) : super(key: key);
 
   @override
   State createState() => ChatHomeScreenState();
 }
 
 class ChatHomeScreenState extends State<ChatHomeScreen> {
-  ChatHomeScreenState({Key key,});
+  ChatHomeScreenState({
+    Key key,
+  });
 
   var currentUserId;
   bool toSeeModarrs;
@@ -97,9 +102,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.wrl.E-Learning'
-          : 'com.wrl.E-Learning',
+      Platform.isAndroid ? 'com.wrl.E-Learning' : 'com.wrl.E-Learning',
       'E-Learning',
       'your channel description',
       playSound: true,
@@ -126,14 +129,23 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
 
   Future<bool> onBackPress() {
     //openDialog();
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => CourseScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => CourseScreen()),
+        (route) => false);
     return Future.value(false);
   }
 
-
-  Stream<dynamic> modQuery() { 
-    Stream<QuerySnapshot> q = FirebaseFirestore.instance.collection('users').where('modarrs', isEqualTo: toSeeModarrs).snapshots();
-    var m = q.forEach((element) {element.docs.forEach((element) {print(element.data());});});
+  Stream<dynamic> modQuery() {
+    Stream<QuerySnapshot> q = FirebaseFirestore.instance
+        .collection('users')
+        .where('modarrs', isEqualTo: toSeeModarrs)
+        .snapshots();
+    var m = q.forEach((element) {
+      element.docs.forEach((element) {
+        print(element.data());
+      });
+    });
     print(m);
     return q;
   }
@@ -141,49 +153,63 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Chat',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.settings),
-          onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ChatSettings())),),
-        ],
-      ),
-      body: Stack(
-        children: <Widget>[
-          // List
-          Container(
-            child: StreamBuilder(
-              stream:
-                  modQuery(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-                    ),
-                  );
-                } else {
-                  return ListView.builder(
-                    padding: EdgeInsets.all(10.0),
-                    itemBuilder: (context, index) =>
-                        buildItem(context, snapshot.data.docs[index]),
-                    itemCount: snapshot.data.docs.length,
-                  );
-                }
-              },
+      bottomNavigationBar: BottomNavBar(true),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Chat',
+      //     style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+      //   ),
+      //   centerTitle: true,
+      //   actions: <Widget>[
+      //     IconButton(
+      //       icon: Icon(Icons.settings),
+      //       onPressed: () => Navigator.push(context,
+      //           MaterialPageRoute(builder: (context) => ChatSettings())),
+      //     ),
+      //   ],
+      // ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            TheAppBar(),
+            Heading('Chat'),
+            SizedBox(
+              height: 20,
             ),
-          ),
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  // List
+                  StreamBuilder(
+                    stream: modQuery(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(themeColor),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                          padding: EdgeInsets.all(10.0),
+                          itemBuilder: (context, index) =>
+                              buildItem(context, snapshot.data.docs[index]),
+                          itemCount: snapshot.data.docs.length,
+                        );
+                      }
+                    },
+                  ),
 
-          // Loading
-          Positioned(
-            child: isLoading ? const Loading() : Container(),
-          )
-        ],
+                  // Loading
+                  Positioned(
+                    child: isLoading ? const Loading() : Container(),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -228,7 +254,7 @@ class ChatHomeScreenState extends State<ChatHomeScreen> {
                     children: <Widget>[
                       Container(
                         child: Text(
-                          'Nickname: ${document.data()['nickname']}',
+                          ' ${document.data()['nickname']}',
                           style: TextStyle(color: primaryColor),
                         ),
                         alignment: Alignment.centerLeft,

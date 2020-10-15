@@ -47,7 +47,7 @@ class _AddMeetingScreenState extends State<AddMeetingScreen> {
         time: _pickedtime,
         title: _title,
         date: _pickedDate,
-        mettingUrl: ''));
+        mettingUrl: 'https://meet.google.com/qdn-vwjy-rsj?fbclid=IwAR1pPxpROO4-pUN92EJFqmoEdA41oYGUUaMajl_mC1q6Z_Bk95htqT981OM'));
         Navigator.of(context).pop();
   }
 
